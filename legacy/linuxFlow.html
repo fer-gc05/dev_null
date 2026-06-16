@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flujo de Datos - dev_null</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-main: #c9d1d9;
+            --accent-green: #2ea043;
+            --accent-red: #f85149;
+            --accent-yellow: #d29922;
+            --panel-bg: #161b22;
+            --border-color: #30363d;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            min-height: 100vh;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: var(--accent-green);
+            margin-bottom: 5px;
+        }
+
+        .prompt {
+            color: var(--accent-green);
+        }
+
+        .subtitle {
+            margin-bottom: 40px;
+            color: #8b949e;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            gap: 40px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        /* Lista de conceptos */
+        .interactive-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .item {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .item.green {
+            border-left: 4px solid var(--accent-green);
+        }
+
+        .item.red {
+            border-left: 4px solid var(--accent-red);
+        }
+
+        .item.yellow {
+            border-left: 4px solid var(--accent-yellow);
+        }
+
+        .item:hover {
+            transform: translateX(5px);
+            filter: brightness(1.2);
+        }
+
+        .item.active {
+            background-color: #21262d;
+        }
+
+        .item.green.active {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        .item.red.active {
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+        }
+
+        .item.yellow.active {
+            border-color: var(--accent-yellow);
+            color: var(--accent-yellow);
+        }
+
+        /* Panel de Información */
+        .info-panel {
+            flex: 1.5;
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-panel h2 {
+            margin-top: 0;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .info-label {
+            color: #8b949e;
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .info-content {
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #000;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin-top: 10px;
+            border: 1px solid #222;
+        }
+
+        .terminal-output {
+            color: #8b949e;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1><span class="prompt">~/dev_null$</span> ./flujo_datos.sh</h1>
+    <div class="subtitle">Entradas, Salidas y el Agujero Negro de Linux</div>
+
+    <div class="container">
+        <!-- Menú interactivo -->
+        <div class="interactive-list">
+            <div class="item green" onclick="showData(0, this)">
+                <span>1. Salida Estándar (stdout)</span> <span>></span>
+            </div>
+            <div class="item red" onclick="showData(1, this)">
+                <span>2. Salida de Error (stderr)</span> <span>2></span>
+            </div>
+            <div class="item yellow" onclick="showData(2, this)">
+                <span>3. Tuberías (Pipes)</span> <span>|</span>
+            </div>
+            <div class="item green" onclick="showData(3, this)">
+                <span>4. El Agujero Negro</span> <span>> /dev/null</span>
+            </div>
+        </div>
+
+        <!-- Panel de visualización -->
+        <div class="info-panel">
+            <h2 id="dataTitle" style="color: var(--text-main);">Selecciona un flujo de datos</h2>
+            <div class="info-label">Concepto Backend:</div>
+            <div class="info-content" id="dataDesc">Descubre cómo los comandos se comunican entre sí y a dónde va la
+                información.</div>
+
+            <div class="info-label">Ejemplo de Código:</div>
+            <div class="code-block" id="dataCode">
+                <span style="color: var(--accent-green);">$</span> esperando_comando...
+            </div>
+            <div class="terminal-output" id="dataOutput"></div>
+        </div>
+    </div>
+
+    <script>
+        const flowData = [
+            {
+                title: "Salida Estándar (stdout - Canal 1)",
+                color: "var(--accent-green)",
+                desc: "Es el flujo normal de datos. Cuando un comando se ejecuta con éxito, escupe los resultados aquí. Por defecto, se imprime en tu pantalla, pero puedes redirigirlo a un archivo usando '>'.",
+                code: "<span style='color: var(--accent-green);'>$</span> echo 'Hola Mundo' > saludo.txt",
+                output: "# Crea un archivo llamado saludo.txt con el texto adentro."
+            },
+            {
+                title: "Salida de Error (stderr - Canal 2)",
+                color: "var(--accent-red)",
+                desc: "Es un canal separado exclusivo para errores. Si tu código PHP o comando falla, el error viaja por aquí. Se separa del éxito para que los errores no corrompan tus archivos de datos.",
+                code: "<span style='color: var(--accent-green);'>$</span> ls /carpeta_falsa 2> errores.log",
+                output: "# Guarda el error 'No such file or directory' en el log, en vez de mostrarlo en pantalla."
+            },
+            {
+                title: "Tuberías (Pipes | )",
+                color: "var(--accent-yellow)",
+                desc: "El superpoder de Linux. Toma la 'Salida Estándar' del Comando A y la conecta directamente como 'Entrada' del Comando B. Permite encadenar programas pequeños para resolver problemas complejos.",
+                code: "<span style='color: var(--accent-green);'>$</span> cat access.log | grep '404' | wc -l",
+                output: "# Lee el log -> Filtra solo los errores 404 -> Cuenta cuántas líneas son."
+            },
+            {
+                title: "El Agujero Negro (> /dev/null)",
+                color: "var(--accent-green)",
+                desc: "El homónimo de nuestro canal. Es un archivo especial que descarta todo lo que se le envía. Si tienes un script corriendo de fondo (cronjob) y no quieres que llene tu disco duro con logs inútiles, lo mandas aquí.",
+                code: "<span style='color: var(--accent-green);'>$</span> ./script_pesado.sh > /dev/null 2>&1",
+                output: "# Ejecuta el script. Manda el éxito (1) a /dev/null y redirige los errores (2) al mismo agujero negro."
+            }
+        ];
+
+        function showData(index, element) {
+            const items = document.querySelectorAll('.item');
+            items.forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+
+            const data = flowData[index];
+
+            const titleEl = document.getElementById('dataTitle');
+            titleEl.innerText = data.title;
+            titleEl.style.color = data.color;
+
+            document.getElementById('dataDesc').innerHTML = data.desc;
+            document.getElementById('dataCode').innerHTML = data.code;
+            document.getElementById('dataOutput').innerText = data.output;
+        }
+    </script>
+</body>
+
+</html>
