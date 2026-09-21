@@ -31,6 +31,13 @@ const cards = [
     title: 'Procesos y Daemons',
     desc: 'PID, demonios, monitoreo con htop y cómo matar procesos rebeldes.',
     path: '/procesos'
+  },
+  {
+    id: 'commands',
+    icon: '⌨️',
+    title: 'Comandos Backend',
+    desc: 'Los 25 comandos de Linux más usados por un desarrollador backend, organizados por categoría.',
+    path: '/comandos-backend'
   }
 ]
 

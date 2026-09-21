@@ -9,7 +9,8 @@ const tabs = [
   { id: 'architecture', name: 'Arquitectura', path: '/arquitectura' },
   { id: 'flow', name: 'Flujo de Datos', path: '/flujo' },
   { id: 'permissions', name: 'Permisos', path: '/permisos' },
-  { id: 'processes', name: 'Procesos', path: '/procesos' }
+  { id: 'processes', name: 'Procesos', path: '/procesos' },
+  { id: 'commands', name: 'Comandos Backend', path: '/comandos-backend' }
 ]
 
 const activeTab = computed(() => route.name)

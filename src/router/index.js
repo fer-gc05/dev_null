@@ -4,13 +4,15 @@ import ArchitectureView from '../views/ArchitectureView.vue'
 import FlowView from '../views/FlowView.vue'
 import PermissionsView from '../views/PermissionsView.vue'
 import ProcessesView from '../views/ProcessesView.vue'
+import CommandsView from '../views/CommandsView.vue'
 
 const routes = [
   { path: '/', name: 'home', component: HomeView },
   { path: '/arquitectura', name: 'architecture', component: ArchitectureView },
   { path: '/flujo', name: 'flow', component: FlowView },
   { path: '/permisos', name: 'permissions', component: PermissionsView },
-  { path: '/procesos', name: 'processes', component: ProcessesView }
+  { path: '/procesos', name: 'processes', component: ProcessesView },
+  { path: '/comandos-backend', name: 'commands', component: CommandsView }
 ]
 
 const router = createRouter({
