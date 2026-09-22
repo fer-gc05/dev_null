@@ -99,7 +99,7 @@ onBeforeUnmount(() => {
   }
 
   .app-main {
-    padding: 20px 16px calc(20px + env(safe-area-inset-bottom));
+    padding: 20px 16px calc(88px + env(safe-area-inset-bottom));
   }
 }
 </style>
