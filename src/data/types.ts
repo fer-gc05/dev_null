@@ -31,6 +31,7 @@ export interface Command {
   comando: string
   queHace: string
   cuandoUsarlo: string
+  output: string[]
 }
 
 export interface CommandBlock {

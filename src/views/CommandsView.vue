@@ -20,10 +20,7 @@ const copyCommand = async (cmd: string) => {
 }
 
 const tryCommand = async (cmd: Command) => {
-  await termRef.value?.typeCommand(cmd.comando, [
-    `# ${cmd.queHace}`,
-    '# (salida simulada — demo interactiva de dev_null)'
-  ])
+  await termRef.value?.typeCommand(cmd.comando, cmd.output)
   await nextTick()
   termRef.value?.$el?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
 }
@@ -71,9 +68,58 @@ const tryCommand = async (cmd: Command) => {
   max-width: 1000px;
 }
 
+.tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  padding-bottom: 4px;
+  margin-bottom: 24px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+.tabs::-webkit-scrollbar {
+  height: 6px;
+}
+
+.tabs::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tabs::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+.tab {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.tab:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.tab.active {
+  background: var(--green);
+  border-color: var(--green);
+  color: var(--bg-color);
+}
+
 .commands-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 20px;
   width: 100%;
 }

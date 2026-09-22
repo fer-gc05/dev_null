@@ -9,6 +9,7 @@ const cloneTree = (nodes: ProcessNode[]): ProcessNode[] =>
 const nodes = ref<ProcessNode[]>(cloneTree(processTree))
 const selectedPid = ref<number | null>(null)
 const exitingPids = ref<Set<number>>(new Set())
+const prefersReducedMotion = ref(false)
 
 interface FlatRow {
   node: ProcessNode
@@ -43,7 +44,12 @@ const findAndRemove = (list: ProcessNode[], pid: number): boolean => {
   return false
 }
 
+const checkReducedMotion = () => {
+  prefersReducedMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
+
 const jitter = (list: ProcessNode[]) => {
+  if (prefersReducedMotion.value) return
   for (const n of list) {
     if (n.status === 'running') {
       n.cpu = Math.max(0, Math.min(99, +(n.cpu + (Math.random() - 0.45) * 0.6).toFixed(1)))
@@ -58,7 +64,11 @@ const jitter = (list: ProcessNode[]) => {
 let timer: ReturnType<typeof setInterval> | undefined
 
 onMounted(() => {
-  timer = setInterval(() => jitter(nodes.value), 2000)
+  checkReducedMotion()
+  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+  mediaQuery.addEventListener('change', checkReducedMotion)
+  timer = setInterval(() => jitter(nodes.value), 3000)
+  return () => mediaQuery.removeEventListener('change', checkReducedMotion)
 })
 
 onUnmounted(() => {
@@ -233,6 +243,7 @@ const statusClass = (status: ProcessNode['status']) => `status-${status}`
 .proc-stat {
   min-width: 72px;
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
 .proc-stat.cpu {

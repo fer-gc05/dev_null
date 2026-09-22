@@ -49,7 +49,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="app-layout">
+  <div class="app-shell">
     <AppSidebar :search-open="searchOpen" @search="openSearch" />
 
     <div class="app-main">
@@ -71,34 +71,35 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-.app-layout {
+.app-shell {
   display: grid;
-  grid-template-columns: 260px 1fr;
-  min-height: 100vh;
+  grid-template-columns: 260px minmax(0, 1fr);
+  height: 100dvh;
   width: 100%;
+  overflow: hidden;
 }
 
 .app-main {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 40px 24px;
   min-width: 0;
+  overflow-y: auto;
+  padding: 40px 24px;
 }
 
 .main-content {
   width: 100%;
-  display: flex;
-  justify-content: center;
+  max-width: 960px;
+  margin: 0 auto;
 }
 
 @media (max-width: 768px) {
-  .app-layout {
+  .app-shell {
     grid-template-columns: 1fr;
   }
 
   .app-main {
-    padding: 20px 16px 80px;
+    padding: 20px 16px calc(20px + env(safe-area-inset-bottom));
   }
 }
 </style>

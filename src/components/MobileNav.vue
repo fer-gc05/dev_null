@@ -5,7 +5,7 @@ import { sections } from '../config/sections'
 
 const route = useRoute()
 
-const mobileItems = computed(() => sections.slice(0, 5))
+const mobileItems = computed(() => sections)
 </script>
 
 <template>

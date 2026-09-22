@@ -100,7 +100,7 @@ watch(
     <div class="sidebar-footer">
       <a
         v-if="!isCollapsed"
-        href="https://youtube.com/@dev_null"
+        href="https://youtube.com/@dev_null-b7h"
         target="_blank"
         rel="noopener noreferrer"
         class="footer-link"
@@ -115,21 +115,25 @@ watch(
 .sidebar {
   position: sticky;
   top: 0;
-  height: 100vh;
-  width: 260px;
+  height: 100dvh;
   background: var(--panel-bg);
   border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
   padding: 20px 12px;
-  transition: width var(--transition);
-  overflow: hidden;
+  overflow-y: auto;
   flex-shrink: 0;
 }
 
 .sidebar.collapsed {
-  width: 64px;
   padding: 20px 8px;
+}
+
+/* Hide sidebar completely on mobile - mobile nav handles navigation */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
 }
 
 .sidebar-header {

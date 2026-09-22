@@ -46,6 +46,20 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 body {
   margin: 0;
   background-color: var(--bg-color);
@@ -55,10 +69,7 @@ body {
 }
 
 #app {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px 20px;
+  width: 100%;
   min-height: 100vh;
 }
 
@@ -82,34 +93,54 @@ a {
   text-decoration: none;
 }
 
-/* Navegación de pestañas */
+/* Navegación de pestañas - no wrap, scroll horizontal en móvil */
 .tabs {
   display: flex;
-  gap: 12px;
-  margin-bottom: 40px;
-  flex-wrap: wrap;
-  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+.tabs::-webkit-scrollbar {
+  height: 6px;
+}
+
+.tabs::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tabs::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
 }
 
 .tab {
-  padding: 10px 20px;
+  flex-shrink: 0;
+  padding: 8px 16px;
   background: transparent;
-  color: var(--green);
-  border: 2px solid var(--green);
-  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
   cursor: pointer;
   font-family: inherit;
-  font-size: 1rem;
-  font-weight: bold;
-  transition: all var(--transition);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--muted);
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .tab:hover {
-  background: rgba(46, 160, 67, 0.1);
+  border-color: var(--green);
+  color: var(--green);
 }
 
 .tab.active {
   background: var(--green);
+  border-color: var(--green);
   color: var(--bg-color);
 }
 

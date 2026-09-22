@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, nextTick, watch } from 'vue'
+import { ref, nextTick, watch, onUnmounted, onMounted } from 'vue'
 
 interface TermLine {
   type: 'prompt' | 'output'
@@ -10,8 +10,24 @@ const lines = ref<TermLine[]>([])
 const isTyping = ref(false)
 const currentLine = ref('')
 const terminalBody = ref<HTMLElement | null>(null)
+const typingTimers: number[] = []
+const prefersReducedMotion = ref(false)
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+const sleep = (ms: number) => new Promise((resolve) => {
+  const id = setTimeout(resolve, ms)
+  typingTimers.push(id)
+})
+
+const checkReducedMotion = () => {
+  prefersReducedMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
+
+onMounted(() => {
+  checkReducedMotion()
+  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+  mediaQuery.addEventListener('change', checkReducedMotion)
+  return () => mediaQuery.removeEventListener('change', checkReducedMotion)
+})
 
 const scrollToBottom = async () => {
   await nextTick()
@@ -26,22 +42,41 @@ const typeCommand = async (command: string, output: string[]) => {
   isTyping.value = true
   currentLine.value = ''
 
-  for (const char of command) {
-    currentLine.value += char
-    await sleep(50 + Math.random() * 30)
+  if (!prefersReducedMotion.value) {
+    for (const char of command) {
+      currentLine.value += char
+      await sleep(50 + Math.random() * 30)
+    }
+  } else {
+    currentLine.value = command
   }
 
   isTyping.value = false
   lines.value.push({ type: 'prompt', text: command })
   currentLine.value = ''
 
-  for (const line of output) {
-    await sleep(200)
-    lines.value.push({ type: 'output', text: line })
+  if (!prefersReducedMotion.value) {
+    for (const line of output) {
+      await sleep(200)
+      lines.value.push({ type: 'output', text: line })
+    }
+  } else {
+    output.forEach(line => lines.value.push({ type: 'output', text: line }))
   }
 }
 
-defineExpose({ typeCommand })
+const clear = () => {
+  lines.value = []
+  currentLine.value = ''
+  isTyping.value = false
+}
+
+onUnmounted(() => {
+  typingTimers.forEach(clearTimeout)
+  typingTimers.length = 0
+})
+
+defineExpose({ typeCommand, clear })
 </script>
 
 <template>
@@ -53,6 +88,12 @@ defineExpose({ typeCommand })
         <span class="light green"></span>
       </div>
       <span class="terminal-title">bash — 80×24</span>
+      <button class="clear-btn" @click="clear" aria-label="Limpiar terminal" title="Limpiar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="3 6 5 6 21 6" />
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+        </svg>
+      </button>
     </div>
     <div ref="terminalBody" class="terminal-body">
       <div
@@ -127,12 +168,43 @@ defineExpose({ typeCommand })
 
 .terminal-body {
   padding: 16px;
-  min-height: 140px;
-  max-height: 260px;
+  height: 220px;
   overflow-y: auto;
   font-family: var(--font-code);
   font-size: 0.9rem;
   line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .terminal-body {
+    height: 180px;
+  }
+}
+
+.clear-btn {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--muted);
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.clear-btn:hover {
+  border-color: var(--red);
+  color: var(--red);
+  background: rgba(248, 81, 73, 0.1);
+}
+
+.clear-btn svg {
+  width: 14px;
+  height: 14px;
 }
 
 .terminal-line {
