@@ -6,7 +6,6 @@ import { getColor } from '../utils/colors'
 const activeBlock = ref(0)
 
 const currentBlock = computed(() => commandsData[activeBlock.value])
-const accentColor = computed(() => getColor(currentBlock.value.color))
 
 const copyCommand = async (cmd: string) => {
   try {
