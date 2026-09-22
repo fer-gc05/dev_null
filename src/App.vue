@@ -1,12 +1,10 @@
 <script setup lang="ts">
+import AppHeader from './components/AppHeader.vue'
 import TabNav from './components/TabNav.vue'
 </script>
 
 <template>
-  <header class="app-header">
-    <h1><span class="prompt">~/dev_null$</span> ./linux_interactivo.sh</h1>
-    <div class="subtitle">Aprende Linux capa por capa, flujo por flujo.</div>
-  </header>
+  <AppHeader />
 
   <TabNav />
 
@@ -20,13 +18,6 @@ import TabNav from './components/TabNav.vue'
 </template>
 
 <style scoped>
-.app-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
 .main-content {
   width: 100%;
   display: flex;
