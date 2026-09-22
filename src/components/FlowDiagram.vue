@@ -121,14 +121,17 @@ const width = computed(() => destX + destW + 12)
 <style scoped>
 .flow-diagram-wrap {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
 .flow-diagram {
+  flex: 1;
   width: 100%;
-  height: auto;
+  min-height: 0;
+  height: 100%;
   background: var(--panel-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius);

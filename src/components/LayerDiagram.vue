@@ -92,14 +92,17 @@ const connectionY = (displayIndex: number) =>
 <style scoped>
 .layer-diagram-wrap {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
 .layer-diagram {
+  flex: 1;
   width: 100%;
-  height: auto;
+  min-height: 0;
+  height: 100%;
   background: var(--panel-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
