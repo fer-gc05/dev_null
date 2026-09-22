@@ -4,6 +4,7 @@ import { processesData } from '../data/processes'
 import InfoPanel from '../components/InfoPanel.vue'
 import InteractiveItem from '../components/InteractiveItem.vue'
 import ProcessTree from '../components/ProcessTree.vue'
+import TerminalBlock from '../components/TerminalBlock.vue'
 
 const selected = ref(0)
 const current = computed(() => processesData[selected.value])
@@ -30,12 +31,7 @@ const current = computed(() => processesData[selected.value])
         <div class="info-content">{{ current.desc }}</div>
 
         <div class="info-label">Ejemplo en Terminal:</div>
-        <div class="code-block">
-          <div v-for="(line, i) in current.codeLines" :key="i">
-            <span v-if="line.startsWith('#')" class="comment">{{ line }}</span>
-            <template v-else>{{ line }}</template>
-          </div>
-        </div>
+        <TerminalBlock :lines="current.codeLines" />
       </InfoPanel>
     </div>
   </section>

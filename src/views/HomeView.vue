@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { navigationSections } from '../config/sections'
+import { useProgress } from '../composables/useProgress'
+import SectionProgress from '../components/SectionProgress.vue'
 
+const { isVisited } = useProgress()
 const router = useRouter()
 
 const navigate = (path: string) => {
@@ -28,7 +31,8 @@ const navigate = (path: string) => {
         @click="navigate(section.path)"
         @keydown.enter="navigate(section.path)"
       >
-        <div class="card-icon" :class="`icon-${section.color}`">
+        <div class="card-header-row">
+          <div class="card-icon" :class="`icon-${section.color}`">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <template v-if="section.icon === 'layers'">
               <polygon points="12 2 2 7 12 12 22 7 12 2" />
@@ -62,6 +66,8 @@ const navigate = (path: string) => {
               <line x1="12" y1="19" x2="20" y2="19" />
             </template>
           </svg>
+          </div>
+          <SectionProgress :section-id="section.id" :visited="isVisited(section.id)" />
         </div>
         <h3>{{ section.name }}</h3>
         <p>{{ section.description }}</p>
@@ -70,3 +76,11 @@ const navigate = (path: string) => {
     </div>
   </section>
 </template>
+
+<style scoped>
+.card-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+</style>

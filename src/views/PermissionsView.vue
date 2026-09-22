@@ -4,6 +4,7 @@ import { fsData, pmData } from '../data/permissions'
 import InfoPanel from '../components/InfoPanel.vue'
 import InteractiveItem from '../components/InteractiveItem.vue'
 import FileTree from '../components/FileTree.vue'
+import TerminalBlock from '../components/TerminalBlock.vue'
 
 const activeTab = ref('archivos')
 const selectedFs = ref(0)
@@ -76,9 +77,7 @@ const currentPm = computed(() => pmData[selectedPm.value])
           <div class="info-content">{{ currentPm.desc }}</div>
 
           <div class="info-label">Ejemplo en Terminal:</div>
-          <div class="code-block">
-            <pre>{{ currentPm.code }}</pre>
-          </div>
+          <TerminalBlock :lines="String(currentPm.code || '').split('\n')" />
         </InfoPanel>
       </div>
     </transition>

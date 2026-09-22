@@ -3,6 +3,7 @@ import { ref, computed, nextTick } from 'vue'
 import { commandsData } from '../data/commands'
 import { getColor } from '../utils/colors'
 import TerminalSimulator from '../components/TerminalSimulator.vue'
+import CommandCard from '../components/CommandCard.vue'
 import type { Command } from '../data/types'
 
 const activeBlock = ref(0)
@@ -51,25 +52,14 @@ const tryCommand = async (cmd: Command) => {
 
     <transition name="fade" mode="out-in">
       <div :key="activeBlock" class="commands-grid">
-        <article
+        <CommandCard
           v-for="cmd in currentBlock.comandos"
           :key="cmd.numero"
-          class="command-card"
-          :class="`accent-${currentBlock.color}`"
-        >
-          <div class="card-header">
-            <span class="command-number">{{ cmd.numero }}</span>
-            <button class="copy-btn" @click="copyCommand(cmd.comando)">Copiar</button>
-          </div>
-          <div class="command-name">{{ cmd.comando }}</div>
-          <div class="command-desc">
-            <span class="label">Qué hace:</span> {{ cmd.queHace }}
-          </div>
-          <div class="command-use">
-            <span class="label">Cuándo usarlo:</span> {{ cmd.cuandoUsarlo }}
-          </div>
-          <button class="try-btn" @click="tryCommand(cmd)">Probar en terminal →</button>
-        </article>
+          :command="cmd"
+          :accent="currentBlock.color"
+          @copy="copyCommand"
+          @try="tryCommand"
+        />
       </div>
     </transition>
   </section>
@@ -86,110 +76,5 @@ const tryCommand = async (cmd: Command) => {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
   width: 100%;
-}
-
-.command-card {
-  background-color: var(--panel-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  transition: all var(--transition);
-  border-left: 4px solid transparent;
-}
-
-.command-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-}
-
-.command-card.accent-green {
-  border-left-color: var(--green);
-}
-
-.command-card.accent-blue {
-  border-left-color: var(--blue);
-}
-
-.command-card.accent-yellow {
-  border-left-color: var(--yellow);
-}
-
-.command-card.accent-purple {
-  border-left-color: var(--purple);
-}
-
-.command-card.accent-red {
-  border-left-color: var(--red);
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.command-number {
-  font-size: 0.85rem;
-  color: var(--muted);
-  font-weight: bold;
-}
-
-.copy-btn {
-  background: transparent;
-  border: 1px solid var(--border-color);
-  color: var(--muted);
-  padding: 4px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.75rem;
-  font-family: inherit;
-  transition: all 0.2s ease;
-}
-
-.copy-btn:hover {
-  border-color: var(--green);
-  color: var(--green);
-}
-
-.command-name {
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: var(--green);
-  font-family: var(--font-code, 'Courier New', Courier, monospace);
-  word-break: break-word;
-}
-
-.command-desc,
-.command-use {
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: var(--text-main);
-}
-
-.label {
-  color: var(--muted);
-  font-weight: bold;
-  font-size: 0.85rem;
-}
-
-.try-btn {
-  background: transparent;
-  border: 1px solid var(--green);
-  color: var(--green);
-  padding: 8px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  font-family: inherit;
-  font-weight: bold;
-  transition: all 0.2s ease;
-  margin-top: auto;
-}
-
-.try-btn:hover {
-  background: rgba(46, 160, 67, 0.12);
 }
 </style>

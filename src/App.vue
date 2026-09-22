@@ -1,11 +1,28 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { useRoute } from 'vue-router'
 import AppSidebar from './components/AppSidebar.vue'
 import AppHeader from './components/AppHeader.vue'
 import MobileNav from './components/MobileNav.vue'
 import SearchModal from './components/SearchModal.vue'
+import BreadcrumbNav from './components/BreadcrumbNav.vue'
+import { sections } from './config/sections'
+import type { BreadcrumbItem } from './data/types'
 
+const route = useRoute()
 const searchOpen = ref(false)
+
+const breadcrumbItems = computed<BreadcrumbItem[]>(() => {
+  const current = sections.find((s) => s.id === route.name)
+  if (!current || current.id === 'home') return []
+  const items: BreadcrumbItem[] = [{ label: 'Inicio', path: '/' }]
+  if (route.name === 'about') {
+    items.push({ label: 'Sobre dev_null' })
+  } else if (current) {
+    items.push({ label: current.name })
+  }
+  return items
+})
 
 const openSearch = () => {
   searchOpen.value = true
@@ -39,6 +56,7 @@ onBeforeUnmount(() => {
       <AppHeader />
 
       <main class="main-content">
+        <BreadcrumbNav v-if="breadcrumbItems.length > 0" :items="breadcrumbItems" />
         <router-view v-slot="{ Component }">
           <transition name="fade" mode="out-in">
             <component :is="Component" />

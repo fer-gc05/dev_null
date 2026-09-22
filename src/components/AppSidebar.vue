@@ -3,6 +3,7 @@ import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { navigationSections } from '../config/sections'
 import { useProgress } from '../composables/useProgress'
+import SectionProgress from './SectionProgress.vue'
 
 defineProps<{ searchOpen: boolean }>()
 const emit = defineEmits<{ search: [] }>()
@@ -88,7 +89,11 @@ watch(
           </svg>
         </span>
         <span v-if="!isCollapsed" class="nav-label">{{ section.name }}</span>
-        <span v-if="!isCollapsed && isVisited(section.id)" class="nav-check">✓</span>
+        <SectionProgress
+          v-if="!isCollapsed"
+          :section-id="section.id"
+          :visited="isVisited(section.id)"
+        />
       </router-link>
     </nav>
 
