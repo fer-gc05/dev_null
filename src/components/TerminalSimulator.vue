@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, nextTick, watch, onUnmounted, onMounted } from 'vue'
+import { t } from '../i18n'
 
 interface TermLine {
   type: 'prompt' | 'output'
@@ -87,8 +88,8 @@ defineExpose({ typeCommand, clear })
         <span class="light yellow"></span>
         <span class="light green"></span>
       </div>
-      <span class="terminal-title">bash — 80×24</span>
-      <button class="clear-btn" @click="clear" aria-label="Limpiar terminal" title="Limpiar">
+      <span class="terminal-title">{{ t('terminal.title') }}</span>
+      <button class="clear-btn" @click="clear" :aria-label="t('terminal.clear')" :title="t('terminal.clear')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <polyline points="3 6 5 6 21 6" />
           <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
@@ -111,7 +112,7 @@ defineExpose({ typeCommand, clear })
         <span class="cursor">▋</span>
       </div>
       <div v-if="!lines.length && !isTyping" class="terminal-line idle">
-        <span class="muted">Selecciona "Probar en terminal" en un comando de abajo…</span>
+        <span class="muted">{{ t('terminal.idle') }}</span>
       </div>
     </div>
   </div>

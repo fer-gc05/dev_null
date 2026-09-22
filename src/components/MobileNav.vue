@@ -2,10 +2,13 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { sections } from '../config/sections'
+import { t } from '../i18n'
 
 const route = useRoute()
 
 const mobileItems = computed(() => sections)
+
+const getName = (item: typeof sections[0]) => t(item.name as string)
 </script>
 
 <template>
@@ -54,7 +57,7 @@ const mobileItems = computed(() => sections)
           <line x1="12" y1="19" x2="20" y2="19" />
         </svg>
       </span>
-      <span class="mobile-label">{{ item.name }}</span>
+      <span class="mobile-label">{{ getName(item) }}</span>
     </router-link>
   </nav>
 </template>

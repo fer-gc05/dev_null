@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { navigationSections } from '../config/sections'
 import { useProgress } from '../composables/useProgress'
 import SectionProgress from './SectionProgress.vue'
 import LocaleToggle from './LocaleToggle.vue'
-import { initI18n } from '../i18n'
+import { initI18n, t } from '../i18n'
 
 defineProps<{ searchOpen: boolean }>()
 const emit = defineEmits<{ search: [] }>()
@@ -13,6 +13,13 @@ const emit = defineEmits<{ search: [] }>()
 const route = useRoute()
 const isCollapsed = ref(false)
 const { markVisited, isVisited } = useProgress()
+
+const translatedSections = computed(() =>
+  navigationSections.map((s) => ({
+    ...s,
+    translatedName: t(s.name as string)
+  }))
+)
 
 onMounted(() => {
   initI18n()
@@ -36,7 +43,7 @@ watch(
       </router-link>
       <button
         class="collapse-btn"
-        :aria-label="isCollapsed ? 'Expandir menú' : 'Colapsar menú'"
+        :aria-label="isCollapsed ? t('sidebar.expand') : t('sidebar.collapse')"
         @click="isCollapsed = !isCollapsed"
       >
         {{ isCollapsed ? '»' : '«' }}
@@ -48,18 +55,18 @@ watch(
         <circle cx="11" cy="11" r="8" />
         <line x1="21" y1="21" x2="16.65" y2="16.65" />
       </svg>
-      <span v-if="!isCollapsed" class="search-label">Buscar...</span>
+      <span v-if="!isCollapsed" class="search-label">{{ t('sidebar.search') }}</span>
       <kbd v-if="!isCollapsed" class="search-kbd">⌘K</kbd>
     </button>
 
     <nav class="sidebar-nav" aria-label="Navegación lateral">
       <router-link
-        v-for="section in navigationSections"
+        v-for="section in translatedSections"
         :key="section.id"
         :to="section.path"
         class="nav-item"
         :class="[`nav-${section.id}`, { active: route.name === section.id }]"
-        :title="isCollapsed ? section.name : undefined"
+        :title="isCollapsed ? section.translatedName : undefined"
       >
         <span class="nav-icon" :class="`icon-${section.color}`" aria-hidden="true">
           <svg v-if="section.icon === 'layers'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -94,7 +101,7 @@ watch(
             <line x1="12" y1="19" x2="20" y2="19" />
           </svg>
         </span>
-        <span v-if="!isCollapsed" class="nav-label">{{ section.name }}</span>
+        <span v-if="!isCollapsed" class="nav-label">{{ section.translatedName }}</span>
         <SectionProgress
           v-if="!isCollapsed"
           :section-id="section.id"
@@ -112,7 +119,7 @@ watch(
         rel="noopener noreferrer"
         class="footer-link"
       >
-        Canal
+        {{ t('sidebar.channel') }}
       </a>
     </div>
   </aside>

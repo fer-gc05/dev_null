@@ -5,11 +5,20 @@ import { getColor } from '../utils/colors'
 import TerminalSimulator from '../components/TerminalSimulator.vue'
 import CommandCard from '../components/CommandCard.vue'
 import type { Command } from '../data/types'
+import { t } from '../i18n'
 
 const activeBlock = ref(0)
 const termRef = ref<InstanceType<typeof TerminalSimulator> | null>(null)
 
 const currentBlock = computed(() => commandsData[activeBlock.value])
+
+const blockLabels: Record<string, string> = {
+  'Navegación': 'cmd.block.nav',
+  'Archivos': 'cmd.block.files',
+  'Red y HTTP': 'cmd.block.network',
+  'Procesos y Recursos': 'cmd.block.processes',
+  'Logs y cierre': 'cmd.block.logs'
+}
 
 const copyCommand = async (cmd: string) => {
   try {
@@ -43,7 +52,7 @@ const tryCommand = async (cmd: Command) => {
         "
         @click="activeBlock = index"
       >
-        {{ block.bloque }}
+        {{ t(blockLabels[block.bloque] || block.bloque) }}
       </button>
     </div>
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LocaleToggle from './LocaleToggle.vue'
+import { t } from '../i18n'
 </script>
 
 <template>
@@ -11,7 +12,7 @@ import LocaleToggle from './LocaleToggle.vue'
       </div>
       <LocaleToggle />
     </div>
-    <div class="tagline">Aprende Linux capa por capa, flujo por flujo.</div>
+    <div class="tagline">{{ t('app.tagline') }}</div>
   </header>
 </template>
 
