@@ -24,7 +24,9 @@ const translatedSections = computed(() =>
 watch(
   () => route.name,
   (name) => {
-    if (typeof name === 'string') markVisited(name)
+    if (typeof name === 'string' && !['home', 'about', 'not-found'].includes(name)) {
+      markVisited(name)
+    }
   },
   { immediate: true }
 )
@@ -55,7 +57,7 @@ watch(
       <kbd v-if="!isCollapsed" class="search-kbd">⌘K</kbd>
     </button>
 
-    <nav class="sidebar-nav" aria-label="Navegación lateral">
+    <nav class="sidebar-nav" :aria-label="t('search.nav.aria')">
       <router-link
         v-for="section in translatedSections"
         :key="section.id"

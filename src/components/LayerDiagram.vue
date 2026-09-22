@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { ArchitectureLayer } from '../data/types'
+import { t, L } from '../i18n'
 
 const props = defineProps<{
   layers: ArchitectureLayer[]
@@ -24,7 +25,7 @@ const height = computed(
   () => props.layers.length * (layerHeight + gap) - gap + padding * 2
 )
 
-const shortTitle = (title: string) => title.replace(/^\d+\.\s*/, '')
+const shortTitle = (title: { es: string; en: string }) => L.value(title).replace(/^\d+\.\s*/, '')
 
 const yOf = (displayIndex: number) => displayIndex * (layerHeight + gap) + padding
 
@@ -38,11 +39,11 @@ const connectionY = (displayIndex: number) =>
       class="layer-diagram"
       :viewBox="`0 0 ${width} ${height}`"
       role="img"
-      aria-label="Diagrama de capas de Linux"
+      :aria-label="t('arch.aria')"
     >
       <g
         v-for="(item, displayIndex) in displayOrder"
-        :key="item.layer.title"
+        :key="item.layer.title.en"
         class="layer-group"
         @click="emit('select', item.index)"
       >
@@ -84,7 +85,7 @@ const connectionY = (displayIndex: number) =>
         />
       </g>
     </svg>
-    <p class="diagram-hint">Click en una capa para ver su detalle →</p>
+    <p class="diagram-hint">{{ t('arch.hint') }}</p>
   </div>
 </template>
 

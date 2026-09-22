@@ -2,28 +2,34 @@ import type { CommandBlock } from './types'
 
 export const commandsData: CommandBlock[] = [
   {
-    bloque: 'Navegación',
+    bloque: 'cmd.block.nav',
     color: 'green',
     comandos: [
       {
         numero: 1,
         comando: 'pwd',
-        queHace: 'Imprime la ruta absoluta actual',
-        cuandoUsarlo: 'Confirmar dónde estás antes de mover o borrar algo',
+        queHace: { es: 'Imprime la ruta absoluta actual', en: 'Print current absolute path' },
+        cuandoUsarlo: {
+          es: 'Confirmar dónde estás antes de mover o borrar algo',
+          en: 'Confirm where you are before moving or deleting something'
+        },
         output: ['/home/user/proyecto']
       },
       {
         numero: 2,
         comando: 'cd -',
-        queHace: 'Vuelve al directorio anterior',
-        cuandoUsarlo: 'Alternar entre config y proyecto sin escribir rutas',
+        queHace: { es: 'Vuelve al directorio anterior', en: 'Return to previous directory' },
+        cuandoUsarlo: {
+          es: 'Alternar entre config y proyecto sin escribir rutas',
+          en: 'Jump between config and project without typing full paths'
+        },
         output: ['/home/user/proyecto', '/home/user']
       },
       {
         numero: 3,
         comando: 'ls -lh',
-        queHace: 'Lista archivos con tamaño legible',
-        cuandoUsarlo: 'Inspeccionar tamaños de logs o builds',
+        queHace: { es: 'Lista archivos con tamaño legible', en: 'List files with human-readable sizes' },
+        cuandoUsarlo: { es: 'Inspeccionar tamaños de logs o builds', en: 'Inspect log or build sizes' },
         output: [
           'total 48K',
           'drwxr-xr-x 2 user user 4.0K ene 15 10:00 src',
@@ -36,15 +42,18 @@ export const commandsData: CommandBlock[] = [
       {
         numero: 4,
         comando: 'mkdir -p app/src/api',
-        queHace: 'Crea carpetas anidadas de una vez',
-        cuandoUsarlo: 'Estructurar un proyecto nuevo rápido',
+        queHace: { es: 'Crea carpetas anidadas de una vez', en: 'Create nested directories at once' },
+        cuandoUsarlo: { es: 'Estructurar un proyecto nuevo rápido', en: 'Scaffold a new project quickly' },
         output: []
       },
       {
         numero: 5,
         comando: 'tree -L 2',
-        queHace: 'Muestra el árbol de directorios',
-        cuandoUsarlo: 'Ver la estructura de un proyecto sin abrir un explorador',
+        queHace: { es: 'Muestra el árbol de directorios', en: 'Show directory tree' },
+        cuandoUsarlo: {
+          es: 'Ver la estructura de un proyecto sin abrir un explorador',
+          en: 'See a project structure without opening a file explorer'
+        },
         output: [
           '.',
           '├── src',
@@ -64,14 +73,14 @@ export const commandsData: CommandBlock[] = [
     ]
   },
   {
-    bloque: 'Archivos',
+    bloque: 'cmd.block.files',
     color: 'blue',
     comandos: [
       {
         numero: 6,
         comando: 'cat / less',
-        queHace: 'Muestra un archivo completo / paginado',
-        cuandoUsarlo: 'cat para archivos cortos, less para largos',
+        queHace: { es: 'Muestra un archivo completo / paginado', en: 'Show entire file / paginated' },
+        cuandoUsarlo: { es: 'cat para archivos cortos, less para largos', en: 'cat for short files, less for long ones' },
         output: [
           '# package.json',
           '{',
@@ -87,8 +96,8 @@ export const commandsData: CommandBlock[] = [
       {
         numero: 7,
         comando: 'head -n 20 / tail -n 20',
-        queHace: 'Primeras / últimas líneas de un archivo',
-        cuandoUsarlo: 'Ver el inicio de un CSV o lo último de un log',
+        queHace: { es: 'Primeras / últimas líneas de un archivo', en: 'First / last lines of a file' },
+        cuandoUsarlo: { es: 'Ver el inicio de un CSV o lo último de un log', en: 'See the start of a CSV or the end of a log' },
         output: [
           '==> head -n 3 access.log <==',
           '192.168.1.1 - - [15/Jan/2025:10:30:45 +0000] "GET /api/users HTTP/1.1" 200 1234',
@@ -104,8 +113,8 @@ export const commandsData: CommandBlock[] = [
       {
         numero: 8,
         comando: 'nano / vim',
-        queHace: 'Editores de texto en terminal',
-        cuandoUsarlo: 'Editar configs sin salir del servidor',
+        queHace: { es: 'Editores de texto en terminal', en: 'Terminal text editors' },
+        cuandoUsarlo: { es: 'Editar configs sin salir del servidor', en: 'Edit configs without leaving the server' },
         output: [
           '[ Abierto en nano - GNU nano 7.2 ]',
           '',
@@ -122,8 +131,14 @@ export const commandsData: CommandBlock[] = [
       {
         numero: 9,
         comando: 'grep -rnI "texto" .',
-        queHace: 'Busca texto recursivamente ignorando binarios',
-        cuandoUsarlo: 'Encontrar una variable o credencial en el código',
+        queHace: {
+          es: 'Busca texto recursivamente ignorando binarios',
+          en: 'Search text recursively ignoring binaries'
+        },
+        cuandoUsarlo: {
+          es: 'Encontrar una variable o credencial en el código',
+          en: 'Find a variable or credential in the code'
+        },
         output: [
           'src/config/api.ts:12:const API_KEY = "texto-secreto-123"',
           'src/utils/helpers.ts:45:console.log("texto de depuración")',
@@ -133,25 +148,24 @@ export const commandsData: CommandBlock[] = [
       {
         numero: 10,
         comando: 'wc -l',
-        queHace: 'Cuenta líneas',
-        cuandoUsarlo: 'Saber cuántas peticiones o errores hay en un log',
-        output: [
-          '1247 access.log',
-          '  234 error.log',
-          '  89  debug.log'
-        ]
+        queHace: { es: 'Cuenta líneas', en: 'Count lines' },
+        cuandoUsarlo: {
+          es: 'Saber cuántas peticiones o errores hay en un log',
+          en: 'Know how many requests or errors are in a log'
+        },
+        output: ['1247 access.log', '  234 error.log', '  89  debug.log']
       }
     ]
   },
   {
-    bloque: 'Red y HTTP',
+    bloque: 'cmd.block.network',
     color: 'yellow',
     comandos: [
       {
         numero: 11,
         comando: 'curl -i http://127.0.0.1:3000',
-        queHace: 'Petición HTTP con headers',
-        cuandoUsarlo: 'Probar que tu API responde localmente',
+        queHace: { es: 'Petición HTTP con headers', en: 'HTTP request with headers' },
+        cuandoUsarlo: { es: 'Probar que tu API responde localmente', en: 'Check that your API responds locally' },
         output: [
           'HTTP/1.1 200 OK',
           'Content-Type: application/json',
@@ -164,8 +178,8 @@ export const commandsData: CommandBlock[] = [
       {
         numero: 12,
         comando: 'ping -c 4 dominio',
-        queHace: 'Comprueba conectividad y DNS',
-        cuandoUsarlo: 'Verificar que el servidor responde en red',
+        queHace: { es: 'Comprueba conectividad y DNS', en: 'Check connectivity and DNS' },
+        cuandoUsarlo: { es: 'Verificar que el servidor responde en red', en: 'Verify the server responds on the network' },
         output: [
           'PING dominio.com (93.184.216.34) 56(84) bytes of data.',
           '64 bytes from 93.184.216.34: icmp_seq=1 ttl=56 time=12.3 ms',
@@ -181,8 +195,8 @@ export const commandsData: CommandBlock[] = [
       {
         numero: 13,
         comando: 'ss -tulnp',
-        queHace: 'Puertos en escucha y su proceso',
-        cuandoUsarlo: 'Ver qué servicio ocupa qué puerto',
+        queHace: { es: 'Puertos en escucha y su proceso', en: 'Listening ports and their process' },
+        cuandoUsarlo: { es: 'Ver qué servicio ocupa qué puerto', en: 'See which service holds which port' },
         output: [
           'Netid  State  Recv-Q Send-Q Local Address:Port  Peer Address:Port  Process',
           'tcp    LISTEN 0      128    0.0.0.0:22         0.0.0.0:*          users:(("sshd",pid=1234,fd=3))',
@@ -196,8 +210,8 @@ export const commandsData: CommandBlock[] = [
       {
         numero: 14,
         comando: 'lsof -i :3000',
-        queHace: 'Proceso que ocupa un puerto específico',
-        cuandoUsarlo: 'Liberar un puerto ocupado (EADDRINUSE)',
+        queHace: { es: 'Proceso que ocupa un puerto específico', en: 'Process holding a specific port' },
+        cuandoUsarlo: { es: 'Liberar un puerto ocupado (EADDRINUSE)', en: 'Free a busy port (EADDRINUSE)' },
         output: [
           'COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME',
           'node    8901 user   18u  IPv4  45678      0t0  TCP 127.0.0.1:3000 (LISTEN)'
@@ -206,8 +220,8 @@ export const commandsData: CommandBlock[] = [
       {
         numero: 15,
         comando: 'dig dominio',
-        queHace: 'Consulta registros DNS',
-        cuandoUsarlo: 'Confirmar propagación de un subdominio',
+        queHace: { es: 'Consulta registros DNS', en: 'Query DNS records' },
+        cuandoUsarlo: { es: 'Confirmar propagación de un subdominio', en: 'Confirm a subdomain has propagated' },
         output: [
           '; <<>> DiG 9.18.12 <<>> dominio.com',
           ';; global options: +cmd',
@@ -230,14 +244,14 @@ export const commandsData: CommandBlock[] = [
     ]
   },
   {
-    bloque: 'Procesos y Recursos',
+    bloque: 'cmd.block.processes',
     color: 'purple',
     comandos: [
       {
         numero: 16,
         comando: 'ps aux | grep proceso',
-        queHace: 'Filtra procesos activos',
-        cuandoUsarlo: 'Confirmar que tu app sigue corriendo',
+        queHace: { es: 'Filtra procesos activos', en: 'Filter active processes' },
+        cuandoUsarlo: { es: 'Confirmar que tu app sigue corriendo', en: 'Confirm your app is still running' },
         output: [
           'USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND',
           'user      8901  2.1  1.2 456789 98765 ?        Sl   10:00   0:15 node server.js',
@@ -249,8 +263,8 @@ export const commandsData: CommandBlock[] = [
       {
         numero: 17,
         comando: 'top / htop',
-        queHace: 'Monitoreo de CPU/RAM en vivo',
-        cuandoUsarlo: 'Diagnosticar un servidor lento',
+        queHace: { es: 'Monitoreo de CPU/RAM en vivo', en: 'Live CPU/RAM monitoring' },
+        cuandoUsarlo: { es: 'Diagnosticar un servidor lento', en: 'Diagnose a slow server' },
         output: [
           'top - 11:30:45 up 2 days,  3:45,  1 user,  load average: 0.52, 0.48, 0.45',
           'Tasks: 187 total,   2 running, 185 sleeping,   0 stopped,   0 zombie',
@@ -266,15 +280,15 @@ export const commandsData: CommandBlock[] = [
       {
         numero: 18,
         comando: 'kill -9 PID',
-        queHace: 'Fuerza el cierre de un proceso (SIGKILL)',
-        cuandoUsarlo: 'Un proceso colgado que no responde a SIGTERM',
+        queHace: { es: 'Fuerza el cierre de un proceso (SIGKILL)', en: 'Force kill a process (SIGKILL)' },
+        cuandoUsarlo: { es: 'Un proceso colgado que no responde a SIGTERM', en: 'A hung process that ignores SIGTERM' },
         output: []
       },
       {
         numero: 19,
         comando: 'systemctl status servicio',
-        queHace: 'Estado de un servicio del sistema',
-        cuandoUsarlo: 'Saber si Nginx/una API está activa',
+        queHace: { es: 'Estado de un servicio del sistema', en: 'System service status' },
+        cuandoUsarlo: { es: 'Saber si Nginx/una API está activa', en: 'Check if Nginx / an API is up' },
         output: [
           '● nginx.service - A high performance web server and a reverse proxy server',
           '     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)',
@@ -295,8 +309,8 @@ export const commandsData: CommandBlock[] = [
       {
         numero: 20,
         comando: 'journalctl -u servicio -n 50 --no-pager',
-        queHace: 'Logs de systemd de un servicio',
-        cuandoUsarlo: 'Revisar por qué un servicio falló al iniciar',
+        queHace: { es: 'Logs de systemd de un servicio', en: 'systemd logs for a service' },
+        cuandoUsarlo: { es: 'Revisar por qué un servicio falló al iniciar', en: 'Check why a service failed to start' },
         output: [
           'ene 15 10:00:00 server systemd[1]: Started A high performance web server.',
           'ene 15 10:00:01 server nginx[567]: nginx: [warn] "ssl_stapling" ignored, no certificate',
@@ -309,14 +323,14 @@ export const commandsData: CommandBlock[] = [
     ]
   },
   {
-    bloque: 'Logs y cierre',
+    bloque: 'cmd.block.logs',
     color: 'red',
     comandos: [
       {
         numero: 21,
         comando: 'tail -f archivo.log',
-        queHace: 'Sigue un log en tiempo real',
-        cuandoUsarlo: 'Ver peticiones entrando en vivo',
+        queHace: { es: 'Sigue un log en tiempo real', en: 'Follow a log in real-time' },
+        cuandoUsarlo: { es: 'Ver peticiones entrando en vivo', en: 'Watch requests arriving live' },
         output: [
           '192.168.1.1 - - [15/Jan/2025:11:30:01 +0000] "GET /api/users HTTP/1.1" 200 1234',
           '192.168.1.2 - - [15/Jan/2025:11:30:02 +0000] "POST /api/auth HTTP/1.1" 201 567',
@@ -329,8 +343,11 @@ export const commandsData: CommandBlock[] = [
       {
         numero: 22,
         comando: 'df -h',
-        queHace: 'Espacio en disco disponible',
-        cuandoUsarlo: 'Diagnosticar un servidor que se cae por disco lleno',
+        queHace: { es: 'Espacio en disco disponible', en: 'Available disk space' },
+        cuandoUsarlo: {
+          es: 'Diagnosticar un servidor que se cae por disco lleno',
+          en: 'Diagnose a server crashing because the disk is full'
+        },
         output: [
           'Filesystem      Size  Used Avail Use% Mounted on',
           '/dev/sda1       100G   45G   50G  48% /',
@@ -342,8 +359,8 @@ export const commandsData: CommandBlock[] = [
       {
         numero: 23,
         comando: 'du -sh /ruta/*',
-        queHace: 'Peso de cada carpeta',
-        cuandoUsarlo: 'Encontrar qué llenó el disco',
+        queHace: { es: 'Peso de cada carpeta', en: 'Size of each folder' },
+        cuandoUsarlo: { es: 'Encontrar qué llenó el disco', en: 'Find what filled the disk' },
         output: [
           '2.1G    /var/log',
           '850G    /var/lib/docker',
@@ -356,8 +373,8 @@ export const commandsData: CommandBlock[] = [
       {
         numero: 24,
         comando: 'history | grep palabra',
-        queHace: 'Busca en comandos anteriores',
-        cuandoUsarlo: 'Recuperar un comando largo ya usado',
+        queHace: { es: 'Busca en comandos anteriores', en: 'Search in command history' },
+        cuandoUsarlo: { es: 'Recuperar un comando largo ya usado', en: 'Recover a long command you already used' },
         output: [
           '  142  git log --oneline --grep="palabra"',
           '  187  grep -rn "palabra" src/',
@@ -368,8 +385,8 @@ export const commandsData: CommandBlock[] = [
       {
         numero: 25,
         comando: 'comando 2> /dev/null',
-        queHace: 'Silencia errores (stderr)',
-        cuandoUsarlo: 'Limpiar salida ruidosa de un comando',
+        queHace: { es: 'Silencia errores (stderr)', en: 'Silence errors (stderr)' },
+        cuandoUsarlo: { es: 'Limpiar salida ruidosa de un comando', en: 'Clean up noisy command output' },
         output: [
           'salida normal del comando',
           'otra línea de stdout',

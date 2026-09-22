@@ -87,7 +87,7 @@ const onSelect = (index: number) => {
       <div class="info-content">{{ L(selected.dev || { es: '', en: '' }) }}</div>
 
       <div v-if="selected.code" class="info-label">{{ L({ es: 'Comando chmod:', en: 'chmod command:' }) }}</div>
-      <div v-if="selected.code" class="code-block">{{ selected.code }}</div>
+      <div v-if="selected.code" class="code-block">{{ L(selected.code) }}</div>
     </div>
   </div>
 </template>

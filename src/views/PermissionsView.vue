@@ -30,7 +30,7 @@ const tabs = [
 
     <transition name="fade" mode="out-in">
       <div v-if="activeTab === 'archivos'" key="archivos">
-        <PermTree :items="fsData" accent="blue" title="Sistema de Archivos" />
+        <PermTree :items="fsData" accent="blue" :title="t('perm.tab.files')" />
       </div>
 
       <div v-else-if="activeTab === 'arbol'" key="arbol" class="tree-tab">
@@ -38,7 +38,7 @@ const tabs = [
       </div>
 
       <div v-else key="permisos">
-        <PermTree :items="pmData" accent="purple-light" title="Usuarios y Permisos" />
+        <PermTree :items="pmData" accent="purple-light" :title="t('perm.tab.perms')" />
       </div>
     </transition>
   </section>

@@ -12,13 +12,14 @@ const getName = (item: typeof sections[0]) => t.value(item.name as string)
 </script>
 
 <template>
-  <nav class="mobile-nav" aria-label="Navegación móvil">
+  <nav class="mobile-nav" :aria-label="t('search.mobile.aria')">
     <router-link
       v-for="item in mobileItems"
       :key="item.id"
       :to="item.path"
       class="mobile-nav-item"
       :class="{ active: route.name === item.id }"
+      :aria-current="route.name === item.id ? 'page' : undefined"
     >
       <span class="mobile-icon" :class="`icon-${item.color}`" aria-hidden="true">
         <svg v-if="item.icon === 'home'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -77,6 +78,7 @@ const getName = (item: typeof sections[0]) => t.value(item.name as string)
 
 .mobile-nav-item {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -85,6 +87,14 @@ const getName = (item: typeof sections[0]) => t.value(item.name as string)
   color: var(--muted);
   font-size: 0.65rem;
   transition: color 0.2s ease;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.mobile-label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .mobile-nav-item.active {

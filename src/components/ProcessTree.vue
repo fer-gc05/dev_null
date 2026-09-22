@@ -2,6 +2,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { processTree } from '../data/process-tree'
 import type { ProcessNode } from '../data/types'
+import { t } from '../i18n'
 
 const cloneTree = (nodes: ProcessNode[]): ProcessNode[] =>
   nodes.map((n) => ({ ...n, children: n.children ? cloneTree(n.children) : undefined }))
@@ -118,24 +119,24 @@ const statusClass = (status: ProcessNode['status']) => `status-${status}`
           <span class="proc-stat ram">{{ row.node.memory.toFixed(1) }}% RAM</span>
         </div>
       </TransitionGroup>
-      <p v-if="!rows.length" class="tree-empty">No hay procesos. Kill exitoso ✓</p>
-      <p class="tree-hint">CPU/RAM se actualizan cada 3s (simulación)</p>
+      <p v-if="!rows.length" class="tree-empty">{{ t('proc.empty') }}</p>
+      <p class="tree-hint">{{ t('proc.tree.hint') }}</p>
     </div>
 
     <div v-if="selected" class="proc-info">
       <h3>{{ selected.name }}</h3>
       <dl>
-        <dt>PID</dt>
+        <dt>{{ t('proc.info.pid') }}</dt>
         <dd class="mono">{{ selected.pid }}</dd>
-        <dt>Estado</dt>
+        <dt>{{ t('proc.info.state') }}</dt>
         <dd>
           <span class="proc-badge" :class="statusClass(selected.status)">
             {{ selected.status }}
           </span>
         </dd>
-        <dt>CPU</dt>
+        <dt>{{ t('proc.info.cpu') }}</dt>
         <dd class="mono">{{ selected.cpu.toFixed(1) }}%</dd>
-        <dt>Memoria</dt>
+        <dt>{{ t('proc.info.mem') }}</dt>
         <dd class="mono">{{ selected.memory.toFixed(1) }}%</dd>
       </dl>
       <button
@@ -146,7 +147,7 @@ const statusClass = (status: ProcessNode['status']) => `status-${status}`
         kill -9 {{ selected.pid }}
       </button>
       <p v-if="selected.pid === 1" class="kill-note">
-        No puedes matar a systemd (PID 1).
+        {{ t('proc.kill.note') }}
       </p>
     </div>
   </div>

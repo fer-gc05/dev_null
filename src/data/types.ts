@@ -1,28 +1,28 @@
-export interface ArchitectureLayer {
-  title: string
-  analogy: string
-  examples: string
-  function: string
-}
-
-export interface FlowItem {
-  title: string
-  color: 'green' | 'red' | 'yellow'
-  desc: string
-  code: string
-  output: string
-}
-
 export interface Bi {
   es: string
   en: string
+}
+
+export interface ArchitectureLayer {
+  title: Bi
+  analogy: Bi
+  examples: Bi
+  function: Bi
+}
+
+export interface FlowItem {
+  title: Bi
+  color: 'green' | 'red' | 'yellow'
+  desc: Bi
+  code: string
+  output: Bi
 }
 
 export interface PermissionItem {
   title: Bi
   desc: Bi
   dev?: Bi
-  code?: string
+  code?: Bi
 }
 
 export interface ProcessItem {
@@ -34,8 +34,8 @@ export interface ProcessItem {
 export interface Command {
   numero: number
   comando: string
-  queHace: string
-  cuandoUsarlo: string
+  queHace: Bi
+  cuandoUsarlo: Bi
   output: string[]
 }
 
@@ -51,7 +51,7 @@ export interface SectionConfig {
   path: string
   icon: string
   color: string
-  description: string
+  description: Bi
 }
 
 export interface FileNode {
@@ -74,7 +74,7 @@ export interface ProcessNode {
 
 export interface SearchIndexItem {
   id: string
-  section: string
+  section: Bi
   title: string
   path: string
   keywords: string[]

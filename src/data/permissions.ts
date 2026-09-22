@@ -37,21 +37,21 @@ export const pmData: PermissionItem[] = [
   {
     title: { es: 'Usuarios: Root vs Regular', en: 'Users: Root vs Regular' },
     desc: { es: 'Root (UID 0) es el superusuario que puede hacer todo. Los usuarios regulares tienen restricciones por seguridad.', en: 'Root (UID 0) is the superuser who can do anything. Regular users have restrictions for security.' },
-    code: '$ sudo su \n# ¡Ahora eres Dios en el sistema!'
+    code: { es: '$ sudo su \n# ¡Ahora eres Dios en el sistema!', en: '$ sudo su\n# You are now God in the system!' }
   },
   {
     title: { es: 'rwx (Lectura, Escritura, Ejecución)', en: 'rwx (Read, Write, Execute)' },
     desc: { es: "Los 3 permisos básicos. \n'r' (Read): Leer el archivo.\n'w' (Write): Modificarlo.\n'x' (Execute): Correrlo como un programa/script.", en: "The 3 basic permissions.\nr (Read): Read the file.\nw (Write): Modify it.\nx (Execute): Run it as a program/script." },
-    code: '-rwxr--r-- 1 dev_null usuarios 1024 script.php'
+    code: { es: '-rwxr--r-- 1 dev_null usuarios 1024 script.php', en: '-rwxr--r-- 1 dev_null users 1024 script.php' }
   },
   {
     title: { es: 'Grupos de Permisos (UGO)', en: 'Permission Groups (UGO)' },
     desc: { es: 'Los permisos se dividen en 3 bloques de caracteres: \n1. Owner (Dueño del archivo)\n2. Group (Grupo al que pertenece)\n3. Others (Cualquier otro usuario)', en: 'Permissions are divided into 3 character blocks:\n1. Owner (File owner)\n2. Group (Group it belongs to)\n3. Others (Any other user)' },
-    code: '$ ls -la\n-rwxr-xr-- (Dueño: rwx | Grupo: r-x | Otros: r--)'
+    code: { es: '$ ls -la\n-rwxr-xr-- (Dueño: rwx | Grupo: r-x | Otros: r--)', en: '$ ls -la\n-rwxr-xr-- (Owner: rwx | Group: r-x | Others: r--)' }
   },
   {
     title: { es: 'Comando: chmod +x', en: 'Command: chmod +x' },
     desc: { es: "Cambia los modos (Change Mode). Al usar '+x' le estás diciendo al sistema: 'Convierte este archivo de texto en un script ejecutable'.", en: "Changes modes (Change Mode). Using '+x' tells the system: 'Turn this text file into an executable script'." },
-    code: '$ chmod +x mi_script_backend.sh\n$ ./mi_script_backend.sh'
+    code: { es: '$ chmod +x mi_script_backend.sh\n$ ./mi_script_backend.sh', en: '$ chmod +x my_backend_script.sh\n$ ./my_backend_script.sh' }
   }
 ]

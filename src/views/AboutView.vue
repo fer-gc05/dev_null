@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { t } from '../i18n'
+</script>
+
 <template>
   <section class="about">
     <div class="about-hero">
@@ -7,41 +11,37 @@
     </div>
 
     <article class="about-content">
-      <h1>¿Qué es dev_null?</h1>
-      <p>
-        dev_null es un sitio interactivo para aprender Linux como un backend
-        developer: arquitectura del sistema, flujo de datos, permisos y
-        procesos, explicados capa por capa con analogías y ejemplos reales.
-      </p>
+      <h1>{{ t('about.title') }}</h1>
+      <p>{{ t('about.intro') }}</p>
 
-      <h2>Canal de YouTube</h2>
+      <h2>{{ t('about.youtube') }}</h2>
       <p>
-        Todo el contenido nace en el canal.
+        {{ t('about.youtube.body') }}
         <a
-          href="https://youtube.com/@dev_null"
+          href="https://youtube.com/@dev_null-b7h"
           target="_blank"
           rel="noopener noreferrer"
-          >Suscríbete a dev_null en YouTube →</a
+          >{{ t('about.subscribe') }}</a
         >
       </p>
 
-      <h2>Stack del sitio</h2>
+      <h2>{{ t('about.stack') }}</h2>
       <ul>
         <li>Vue 3 + Vite + TypeScript</li>
-        <li>Vue Router (SPA con history mode)</li>
-        <li>CSS puro con variables (tema terminal)</li>
+        <li>Vue Router (SPA with history mode)</li>
+        <li>{{ t('about.stack.css') }}</li>
         <li>Google Fonts: Inter + JetBrains Mono</li>
-        <li>Deploy en Netlify</li>
+        <li>{{ t('about.stack.deploy') }}</li>
       </ul>
 
-      <h2>Contribuir / reportar bugs</h2>
+      <h2>{{ t('about.contribute') }}</h2>
       <p>
-        ¿Encontraste un error o tienes una idea?
+        {{ t('about.bugs') }}
         <a
           href="https://github.com/fer-gc05/dev_null/issues"
           target="_blank"
           rel="noopener noreferrer"
-          >Abre un issue en GitHub →</a
+          >{{ t('about.issue') }}</a
         >
       </p>
     </article>

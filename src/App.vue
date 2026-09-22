@@ -7,21 +7,21 @@ import MobileNav from './components/MobileNav.vue'
 import SearchModal from './components/SearchModal.vue'
 import BreadcrumbNav from './components/BreadcrumbNav.vue'
 import { sections } from './config/sections'
+import { t } from './i18n'
 import type { BreadcrumbItem } from './data/types'
 
 const route = useRoute()
 const searchOpen = ref(false)
 
 const breadcrumbItems = computed<BreadcrumbItem[]>(() => {
-  const current = sections.find((s) => s.id === route.name)
-  if (!current || current.id === 'home') return []
-  const items: BreadcrumbItem[] = [{ label: 'Inicio', path: '/' }]
+  if (route.name === 'home' || route.name === 'not-found') return []
+  const homeCrumb = { label: t.value('nav.home'), path: '/' }
   if (route.name === 'about') {
-    items.push({ label: 'Sobre dev_null' })
-  } else if (current) {
-    items.push({ label: current.name })
+    return [homeCrumb, { label: t.value('nav.about') }]
   }
-  return items
+  const current = sections.find((s) => s.id === route.name)
+  if (!current) return []
+  return [homeCrumb, { label: t.value(current.name) }]
 })
 
 const openSearch = () => {

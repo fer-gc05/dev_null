@@ -4,6 +4,7 @@ import { flowData } from '../data/flow'
 import { getColor } from '../utils/colors'
 import InfoPanel from '../components/InfoPanel.vue'
 import FlowDiagram from '../components/FlowDiagram.vue'
+import { t, L } from '../i18n'
 
 const selected = ref(0)
 
@@ -34,13 +35,13 @@ watch(
   <section class="container">
     <FlowDiagram :selected="selected" @select="selected = $event" />
 
-    <InfoPanel :title="current.title" :accent-color="accentColor">
-      <div class="info-label">Concepto Backend:</div>
-      <div class="info-content">{{ current.desc }}</div>
+    <InfoPanel :title="L(current.title)" :accent-color="accentColor">
+      <div class="info-label">{{ t('flow.concept') }}</div>
+      <div class="info-content">{{ L(current.desc) }}</div>
 
-      <div class="info-label">Ejemplo de Código:</div>
+      <div class="info-label">{{ t('flow.code') }}</div>
       <div class="code-block"><span class="prompt">$</span> {{ typedCode }}<span class="type-cursor">▋</span></div>
-      <div class="terminal-output">{{ current.output }}</div>
+      <div class="terminal-output">{{ L(current.output) }}</div>
     </InfoPanel>
   </section>
 </template>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { t } from '../i18n'
 
 const route = useRoute()
 const typedText = ref('')
@@ -26,8 +27,8 @@ onMounted(() => {
     <p class="error-code">
       bash: {{ fullCommand }}: No such file or directory
     </p>
-    <p class="error-hint">La ruta que buscas no existe en este servidor.</p>
-    <router-link to="/" class="home-link">← Volver al inicio</router-link>
+    <p class="error-hint">{{ t('nf.hint') }}</p>
+    <router-link to="/" class="home-link">{{ t('nf.back') }}</router-link>
   </section>
 </template>
 

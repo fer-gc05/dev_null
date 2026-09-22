@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import { watch } from 'vue'
 import { navigationSections } from '../config/sections'
+import { t, L, locale } from '../i18n'
 import HomeView from '../views/HomeView.vue'
 import ArchitectureView from '../views/ArchitectureView.vue'
 import FlowView from '../views/FlowView.vue'
@@ -24,7 +26,7 @@ const routes: RouteRecordRaw[] = navigationSections.map((section) => ({
   name: section.id,
   component: componentMap[section.id],
   meta: {
-    title: `${section.name} | dev_null`,
+    titleKey: section.name,
     description: section.description
   }
 }))
@@ -34,8 +36,8 @@ routes.unshift({
   name: 'home',
   component: HomeView,
   meta: {
-    title: 'dev_null | Linux Interactivo',
-    description: 'Aprende Linux capa por capa, flujo por flujo.'
+    titleKey: 'meta.home',
+    descriptionKey: 'meta.home.desc'
   }
 })
 
@@ -44,9 +46,8 @@ routes.push({
   name: 'about',
   component: AboutView,
   meta: {
-    title: 'Sobre dev_null | Linux Interactivo',
-    description:
-      'Qué es dev_null, el canal de YouTube, el stack del sitio y cómo contribuir.'
+    titleKey: 'meta.about',
+    descriptionKey: 'meta.about.desc'
   }
 })
 
@@ -55,8 +56,8 @@ routes.push({
   name: 'not-found',
   component: NotFoundView,
   meta: {
-    title: '404 | dev_null',
-    description: 'Página no encontrada'
+    titleKey: 'meta.404',
+    descriptionKey: 'meta.404.desc'
   }
 })
 
@@ -78,18 +79,36 @@ function upsertMeta(attr: 'name' | 'property', key: string, content: string) {
   el.setAttribute('content', content)
 }
 
-router.beforeEach((to) => {
-  const title = to.meta.title as string | undefined
-  const description = to.meta.description as string | undefined
+function applyMeta(to: { meta: Record<string, unknown> }) {
+  const titleKey = to.meta.titleKey as string | undefined
+  const descriptionKey = to.meta.descriptionKey as string | undefined
+  const descriptionBi = to.meta.description as { es: string; en: string } | undefined
 
-  if (title) {
-    document.title = title
-    upsertMeta('property', 'og:title', title)
+  if (titleKey) {
+    const finalTitle = titleKey.startsWith('meta.')
+      ? t.value(titleKey)
+      : `${t.value(titleKey)} | dev_null`
+    document.title = finalTitle
+    upsertMeta('property', 'og:title', finalTitle)
   }
+
+  const description = descriptionKey
+    ? t.value(descriptionKey)
+    : descriptionBi
+      ? L.value(descriptionBi)
+      : undefined
   if (description) {
     upsertMeta('name', 'description', description)
     upsertMeta('property', 'og:description', description)
   }
+}
+
+router.beforeEach((to) => {
+  applyMeta({ meta: to.meta as Record<string, unknown> })
+})
+
+watch(locale, () => {
+  applyMeta({ meta: router.currentRoute.value.meta as Record<string, unknown> })
 })
 
 export default router

@@ -37,6 +37,8 @@ export function setLocale(l: Locale) {
   document.documentElement.lang = l
 }
 
+export { locale }
+
 export function toggleLocale() {
   setLocale(locale.value === 'es' ? 'en' : 'es')
 }
@@ -65,8 +67,65 @@ const dict: Record<string, { es: string; en: string }> = {
   'nav.processes': { es: 'Procesos', en: 'Processes' },
   'nav.commands': { es: 'Comandos Backend', en: 'Commands' },
   'nav.about': { es: 'Sobre dev_null', en: 'About dev_null' },
-  'search.placeholder': { es: 'Buscar...', en: 'Search...' },
+  'search.placeholder': { es: 'Buscar comando o concepto...', en: 'Search command or concept...' },
   'search.shortcut': { es: '⌘K', en: '⌘K' },
+  'search.aria': { es: 'Búsqueda', en: 'Search' },
+  'search.empty': { es: 'Sin resultados para', en: 'No results for' },
+  'search.hint': { es: 'navegar · ir · cerrar', en: 'navigate · go · close' },
+  'search.nav.aria': { es: 'Navegación lateral', en: 'Sidebar navigation' },
+  'search.mobile.aria': { es: 'Navegación móvil', en: 'Mobile navigation' },
+  'home.hero': { es: 'Aprende Linux como un backend developer.', en: 'Learn Linux like a backend developer.' },
+  'arch.analogy': { es: 'Analogía del Restaurante:', en: 'Restaurant Analogy:' },
+  'arch.examples': { es: 'Ejemplos Reales:', en: 'Real Examples:' },
+  'arch.function': { es: 'Función Técnica:', en: 'Technical Function:' },
+  'arch.hint': { es: 'Click en una capa para ver su detalle →', en: 'Click a layer to see its details →' },
+  'arch.aria': { es: 'Diagrama de capas de Linux', en: 'Linux layers diagram' },
+  'flow.concept': { es: 'Concepto Backend:', en: 'Backend Concept:' },
+  'flow.code': { es: 'Ejemplo de Código:', en: 'Code Example:' },
+  'flow.hint': {
+    es: 'Click en un nodo (stdout, stderr, pipe…) para ver su explicación →',
+    en: 'Click a node (stdout, stderr, pipe…) to see its explanation →'
+  },
+  'flow.aria': { es: 'Diagrama de flujo de datos', en: 'Data flow diagram' },
+  'flow.cmd': { es: 'comando', en: 'command' },
+  'flow.cmdA': { es: 'comando A', en: 'command A' },
+  'flow.cmdB': { es: 'comando B', en: 'command B' },
+  'flow.file': { es: 'archivo', en: 'file' },
+  'flow.discard': { es: 'descartado', en: 'discarded' },
+  'file.path': { es: 'Ruta', en: 'Path' },
+  'file.type': { es: 'Tipo', en: 'Type' },
+  'file.dir': { es: 'directorio', en: 'directory' },
+  'file.file': { es: 'archivo', en: 'file' },
+  'file.symbols': { es: 'Permisos (símbolos)', en: 'Permissions (symbols)' },
+  'file.octal': { es: 'Permisos (octal)', en: 'Permissions (octal)' },
+  'file.chmod': { es: 'Equivalencia chmod:', en: 'chmod equivalent:' },
+  'about.title': { es: '¿Qué es dev_null?', en: 'What is dev_null?' },
+  'about.intro': {
+    es: 'dev_null es un sitio interactivo para aprender Linux como un backend developer: arquitectura del sistema, flujo de datos, permisos y procesos, explicados capa por capa con analogías y ejemplos reales.',
+    en: 'dev_null is an interactive site to learn Linux as a backend developer: system architecture, data flow, permissions and processes, explained layer by layer with analogies and real examples.'
+  },
+  'about.youtube': { es: 'Canal de YouTube', en: 'YouTube Channel' },
+  'about.youtube.body': { es: 'Todo el contenido nace en el canal.', en: 'All content is born on the channel.' },
+  'about.subscribe': { es: 'Suscríbete a dev_null en YouTube →', en: 'Subscribe to dev_null on YouTube →' },
+  'about.stack': { es: 'Stack del sitio', en: 'Site Stack' },
+  'about.stack.css': { es: 'CSS puro con variables (tema terminal)', en: 'Pure CSS with variables (terminal theme)' },
+  'about.stack.deploy': { es: 'Deploy en Netlify', en: 'Deployed on Netlify' },
+  'about.contribute': { es: 'Contribuir / reportar bugs', en: 'Contribute / report bugs' },
+  'about.bugs': { es: '¿Encontraste un error o tienes una idea?', en: 'Found a bug or have an idea?' },
+  'about.issue': { es: 'Abre un issue en GitHub →', en: 'Open a GitHub issue →' },
+  'nf.hint': { es: 'La ruta que buscas no existe en este servidor.', en: 'The path you are looking for does not exist on this server.' },
+  'nf.back': { es: '← Volver al inicio', en: '← Back to home' },
+  'meta.home': { es: 'dev_null | Linux Interactivo', en: 'dev_null | Interactive Linux' },
+  'meta.about': { es: 'Sobre dev_null | Linux Interactivo', en: 'About dev_null | Interactive Linux' },
+  'meta.404': { es: '404 | dev_null', en: '404 | dev_null' },
+  'meta.home.desc': { es: 'Aprende Linux capa por capa, flujo por flujo.', en: 'Learn Linux layer by layer, flow by flow.' },
+  'meta.about.desc': {
+    es: 'Qué es dev_null, el canal de YouTube, el stack del sitio y cómo contribuir.',
+    en: 'What dev_null is, the YouTube channel, the site stack and how to contribute.'
+  },
+  'meta.404.desc': { es: 'Página no encontrada', en: 'Page not found' },
+  'progress.visited': { es: 'Sección visitada', en: 'Section visited' },
+  'progress.pending': { es: 'Sección pendiente', en: 'Section pending' },
   'sidebar.collapse': { es: 'Colapsar menú', en: 'Collapse menu' },
   'sidebar.expand': { es: 'Expandir menú', en: 'Expand menu' },
   'sidebar.search': { es: 'Buscar...', en: 'Search...' },

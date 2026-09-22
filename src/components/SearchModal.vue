@@ -3,6 +3,7 @@ import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { searchIndex } from '../data/search-index'
 import type { SearchIndexItem } from '../data/types'
+import { t, L } from '../i18n'
 
 const props = defineProps<{ isOpen: boolean }>()
 const emit = defineEmits<{ close: [] }>()
@@ -19,7 +20,8 @@ const filteredResults = computed<SearchIndexItem[]>(() => {
     .filter(
       (item) =>
         item.title.toLowerCase().includes(q) ||
-        item.section.toLowerCase().includes(q) ||
+        item.section.es.toLowerCase().includes(q) ||
+        item.section.en.toLowerCase().includes(q) ||
         item.keywords.some((k) => k.toLowerCase().includes(q))
     )
     .slice(0, 10)
@@ -84,7 +86,7 @@ onBeforeUnmount(() => {
 <template>
   <Teleport to="body">
     <div v-if="isOpen" class="search-overlay" @click.self="emit('close')">
-      <div class="search-modal" role="dialog" aria-modal="true" aria-label="Búsqueda">
+      <div class="search-modal" role="dialog" aria-modal="true" :aria-label="t('search.aria')">
         <div class="search-input-row">
           <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="11" cy="11" r="8" />
@@ -94,7 +96,7 @@ onBeforeUnmount(() => {
             ref="searchInput"
             v-model="query"
             type="text"
-            placeholder="Buscar comando o concepto..."
+            :placeholder="t('search.placeholder')"
             @keydown.escape="emit('close')"
             @keydown.down.prevent="highlightNext"
             @keydown.up.prevent="highlightPrev"
@@ -114,15 +116,15 @@ onBeforeUnmount(() => {
             "
             @mouseenter="highlightedIndex = index"
           >
-            <span class="result-section">{{ result.section }}</span>
+            <span class="result-section">{{ L(result.section) }}</span>
             <span class="result-title">{{ result.title }}</span>
           </button>
           <div v-if="filteredResults.length === 0" class="search-empty">
-            Sin resultados para "{{ query }}"
+            {{ t('search.empty') }} "{{ query }}"
           </div>
         </div>
         <div class="search-hint">
-          <kbd>↑↓</kbd> navegar · <kbd>↵</kbd> ir · <kbd>esc</kbd> cerrar
+          <kbd>↑↓</kbd> {{ t('search.hint') }}
         </div>
       </div>
     </div>

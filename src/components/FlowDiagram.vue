@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { t } from '../i18n'
 
 const props = defineProps<{
   selected: number
@@ -13,12 +14,12 @@ const rowGap = 22
 const padding = 16
 const height = computed(() => 4 * (rowHeight + rowGap) - rowGap + padding * 2)
 
-const rows = [
-  { command: 'comando', node: 'stdout', dest: 'archivo', color: 'var(--green)' },
-  { command: 'comando', node: 'stderr', dest: '/dev/null', color: 'var(--red)' },
-  { command: 'comando A', node: 'pipe |', dest: 'comando B', color: 'var(--yellow)' },
-  { command: 'comando', node: '> /dev/null', dest: 'descartado', color: 'var(--green)' }
-]
+const rows = computed(() => [
+  { command: t.value('flow.cmd'), node: 'stdout', dest: t.value('flow.file'), color: 'var(--green)' },
+  { command: t.value('flow.cmd'), node: 'stderr', dest: '/dev/null', color: 'var(--red)' },
+  { command: t.value('flow.cmdA'), node: 'pipe |', dest: t.value('flow.cmdB'), color: 'var(--yellow)' },
+  { command: t.value('flow.cmd'), node: '> /dev/null', dest: t.value('flow.discard'), color: 'var(--green)' }
+])
 
 // Relative positions (percentage-based)
 const cmdX = 12
@@ -43,7 +44,7 @@ const width = computed(() => destX + destW + 12)
       class="flow-diagram"
       :viewBox="`0 0 ${width} ${height}`"
       role="img"
-      aria-label="Diagrama de flujo de datos"
+      :aria-label="t('flow.aria')"
     >
       <g v-for="(row, i) in rows" :key="i">
         <rect
@@ -113,7 +114,7 @@ const width = computed(() => destX + destW + 12)
         </text>
       </g>
     </svg>
-    <p class="diagram-hint">Click en un nodo (stdout, stderr, pipe…) para ver su explicación →</p>
+    <p class="diagram-hint">{{ t('flow.hint') }}</p>
   </div>
 </template>
 

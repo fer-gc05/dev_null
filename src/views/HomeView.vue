@@ -3,6 +3,7 @@ import { useRouter } from 'vue-router'
 import { navigationSections } from '../config/sections'
 import { useProgress } from '../composables/useProgress'
 import SectionProgress from '../components/SectionProgress.vue'
+import { t, L } from '../i18n'
 
 const { isVisited } = useProgress()
 const router = useRouter()
@@ -18,7 +19,7 @@ const navigate = (path: string) => {
       <div class="hero-prompt">
         <span class="prompt">~/dev_null$</span> ./linux_interactivo.sh
       </div>
-      <p class="hero-desc">Aprende Linux como un backend developer.</p>
+      <p class="hero-desc">{{ t('home.hero') }}</p>
     </div>
     <div class="section-grid">
       <article
@@ -69,8 +70,8 @@ const navigate = (path: string) => {
           </div>
           <SectionProgress :section-id="section.id" :visited="isVisited(section.id)" />
         </div>
-        <h3>{{ section.name }}</h3>
-        <p>{{ section.description }}</p>
+        <h3>{{ t(section.name) }}</h3>
+        <p>{{ L(section.description) }}</p>
         <span class="card-arrow">→</span>
       </article>
     </div>

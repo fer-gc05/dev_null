@@ -7,7 +7,10 @@ export const sections: SectionConfig[] = [
     path: '/',
     icon: 'home',
     color: 'green',
-    description: 'Página principal con acceso a todas las secciones.'
+    description: {
+      es: 'Página principal con acceso a todas las secciones.',
+      en: 'Home page with access to all sections.'
+    }
   },
   {
     id: 'architecture',
@@ -15,7 +18,10 @@ export const sections: SectionConfig[] = [
     path: '/architecture',
     icon: 'layers',
     color: 'green',
-    description: 'Desarma el sistema operativo capa por capa: Hardware, Kernel, Shell y Espacio de Usuario.'
+    description: {
+      es: 'Desarma el sistema operativo capa por capa: Hardware, Kernel, Shell y Espacio de Usuario.',
+      en: 'Breaks down the operating system layer by layer: Hardware, Kernel, Shell and User Space.'
+    }
   },
   {
     id: 'flow',
@@ -23,7 +29,10 @@ export const sections: SectionConfig[] = [
     path: '/flow',
     icon: 'git-branch',
     color: 'yellow',
-    description: 'Entiende stdout, stderr, pipes y el famoso agujero negro /dev/null.'
+    description: {
+      es: 'Entiende stdout, stderr, pipes y el famoso agujero negro /dev/null.',
+      en: 'Understand stdout, stderr, pipes and the famous black hole /dev/null.'
+    }
   },
   {
     id: 'permissions',
@@ -31,7 +40,10 @@ export const sections: SectionConfig[] = [
     path: '/permissions',
     icon: 'lock',
     color: 'blue',
-    description: 'Sistema de archivos, usuarios, grupos y el control de acceso en Linux.'
+    description: {
+      es: 'Sistema de archivos, usuarios, grupos y el control de acceso en Linux.',
+      en: 'Filesystem, users, groups and access control in Linux.'
+    }
   },
   {
     id: 'processes',
@@ -39,7 +51,10 @@ export const sections: SectionConfig[] = [
     path: '/processes',
     icon: 'cpu',
     color: 'purple',
-    description: 'PID, demonios, monitoreo con htop y cómo matar procesos rebeldes.'
+    description: {
+      es: 'PID, demonios, monitoreo con htop y cómo matar procesos rebeldes.',
+      en: 'PIDs, daemons, monitoring with htop and how to kill runaway processes.'
+    }
   },
   {
     id: 'commands',
@@ -47,7 +62,10 @@ export const sections: SectionConfig[] = [
     path: '/commands',
     icon: 'terminal',
     color: 'green',
-    description: 'Los 25 comandos de Linux más usados por un desarrollador backend.'
+    description: {
+      es: 'Los 25 comandos de Linux más usados por un desarrollador backend.',
+      en: 'The 25 Linux commands most used by a backend developer.'
+    }
   }
 ]
 

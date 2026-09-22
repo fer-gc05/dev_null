@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { t } from '../i18n'
+
 defineProps<{
   sectionId: string
   visited: boolean
@@ -9,7 +11,7 @@ defineProps<{
   <span
     class="section-progress"
     :class="{ visited }"
-    :aria-label="visited ? 'Sección visitada' : 'Sección pendiente'"
+    :aria-label="visited ? t('progress.visited') : t('progress.pending')"
   >
     {{ visited ? '✓' : '○' }}
   </span>

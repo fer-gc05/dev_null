@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Command } from '../data/types'
-import { t } from '../i18n'
+import { t, L } from '../i18n'
 
 defineProps<{
   command: Command
@@ -25,10 +25,10 @@ const emit = defineEmits<{ copy: [cmd: string]; try: [cmd: Command] }>()
     </div>
     <div class="command-name">{{ command.comando }}</div>
     <div class="command-desc">
-      <span class="label">{{ t('cmd.label.what') }}</span> {{ command.queHace }}
+      <span class="label">{{ t('cmd.label.what') }}</span> {{ L(command.queHace) }}
     </div>
     <div class="command-use">
-      <span class="label">{{ t('cmd.label.when') }}</span> {{ command.cuandoUsarlo }}
+      <span class="label">{{ t('cmd.label.when') }}</span> {{ L(command.cuandoUsarlo) }}
     </div>
     <button class="try-btn" type="button" @click="emit('try', command)">
       {{ t('footer.try') }} <span class="arrow">→</span>

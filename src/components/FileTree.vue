@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import { fileTree } from '../data/filesystem'
 import type { FileNode } from '../data/types'
 import FileTreeNode from './FileTreeNode.vue'
+import { t } from '../i18n'
 
 const mode = ref<'symbols' | 'octal'>('symbols')
 const selectedNode = ref<FileNode | null>(fileTree[0])
@@ -27,7 +28,7 @@ const detail = computed(() => {
   return {
     name: n.name,
     path: selectedKey.value,
-    type: n.type === 'directory' ? 'directorio' : 'archivo',
+    type: n.type === 'directory' ? t.value('file.dir') : t.value('file.file'),
     symbols: n.permissions ?? '—',
     octal: octalOf(n.permissions)
   }
@@ -71,16 +72,16 @@ const detail = computed(() => {
     <div v-if="detail" class="tree-info">
       <h3>{{ detail.name }}</h3>
       <dl>
-        <dt>Ruta</dt>
+        <dt>{{ t('file.path') }}</dt>
         <dd>{{ detail.path }}</dd>
-        <dt>Tipo</dt>
+        <dt>{{ t('file.type') }}</dt>
         <dd>{{ detail.type }}</dd>
-        <dt>Permisos (símbolos)</dt>
+        <dt>{{ t('file.symbols') }}</dt>
         <dd class="mono">{{ detail.symbols }}</dd>
-        <dt>Permisos (octal)</dt>
+        <dt>{{ t('file.octal') }}</dt>
         <dd class="mono">{{ detail.octal }}</dd>
       </dl>
-      <div class="info-label">Equivalencia chmod:</div>
+      <div class="info-label">{{ t('file.chmod') }}</div>
       <div class="code-block">chmod {{ detail.octal }} {{ detail.path }}</div>
     </div>
   </div>

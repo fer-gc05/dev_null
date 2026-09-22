@@ -12,14 +12,6 @@ const termRef = ref<InstanceType<typeof TerminalSimulator> | null>(null)
 
 const currentBlock = computed(() => commandsData[activeBlock.value])
 
-const blockLabels: Record<string, string> = {
-  'Navegación': 'cmd.block.nav',
-  'Archivos': 'cmd.block.files',
-  'Red y HTTP': 'cmd.block.network',
-  'Procesos y Recursos': 'cmd.block.processes',
-  'Logs y cierre': 'cmd.block.logs'
-}
-
 const copyCommand = async (cmd: string) => {
   try {
     await navigator.clipboard.writeText(cmd)
@@ -52,7 +44,7 @@ const tryCommand = async (cmd: Command) => {
         "
         @click="activeBlock = index"
       >
-        {{ t(blockLabels[block.bloque] || block.bloque) }}
+        {{ t(block.bloque) }}
       </button>
     </div>
 
