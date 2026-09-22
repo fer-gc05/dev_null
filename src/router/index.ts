@@ -6,6 +6,7 @@ import FlowView from '../views/FlowView.vue'
 import PermissionsView from '../views/PermissionsView.vue'
 import ProcessesView from '../views/ProcessesView.vue'
 import CommandsView from '../views/CommandsView.vue'
+import AboutView from '../views/AboutView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
 
 const componentMap: Record<string, typeof HomeView> = {
@@ -14,7 +15,8 @@ const componentMap: Record<string, typeof HomeView> = {
   flow: FlowView,
   permissions: PermissionsView,
   processes: ProcessesView,
-  commands: CommandsView
+  commands: CommandsView,
+  about: AboutView
 }
 
 const routes: RouteRecordRaw[] = navigationSections.map((section) => ({
@@ -38,6 +40,17 @@ routes.unshift({
 })
 
 routes.push({
+  path: '/sobre',
+  name: 'about',
+  component: AboutView,
+  meta: {
+    title: 'Sobre dev_null | Linux Interactivo',
+    description:
+      'Qué es dev_null, el canal de YouTube, el stack del sitio y cómo contribuir.'
+  }
+})
+
+routes.push({
   path: '/:pathMatch(.*)*',
   name: 'not-found',
   component: NotFoundView,
@@ -55,10 +68,27 @@ const router = createRouter({
   }
 })
 
+function upsertMeta(attr: 'name' | 'property', key: string, content: string) {
+  let el = document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`)
+  if (!el) {
+    el = document.createElement('meta')
+    el.setAttribute(attr, key)
+    document.head.appendChild(el)
+  }
+  el.setAttribute('content', content)
+}
+
 router.beforeEach((to) => {
   const title = to.meta.title as string | undefined
+  const description = to.meta.description as string | undefined
+
   if (title) {
     document.title = title
+    upsertMeta('property', 'og:title', title)
+  }
+  if (description) {
+    upsertMeta('name', 'description', description)
+    upsertMeta('property', 'og:description', description)
   }
 })
 

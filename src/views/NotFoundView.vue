@@ -1,16 +1,30 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
+const typedText = ref('')
+const fullCommand = `ls ${route.path}`
+
+onMounted(() => {
+  let i = 0
+  const timer = setInterval(() => {
+    typedText.value = fullCommand.slice(0, i + 1)
+    i++
+    if (i >= fullCommand.length) {
+      clearInterval(timer)
+    }
+  }, 60)
+})
 </script>
 
 <template>
   <section class="not-found">
     <div class="terminal-error">
-      <span class="prompt">$</span> ls {{ route.path }}<span class="cursor">▋</span>
+      <span class="prompt">$</span> {{ typedText }}<span class="cursor">▋</span>
     </div>
     <p class="error-code">
-      bash: ls {{ route.path }}: No such file or directory
+      bash: {{ fullCommand }}: No such file or directory
     </p>
     <p class="error-hint">La ruta que buscas no existe en este servidor.</p>
     <router-link to="/" class="home-link">← Volver al inicio</router-link>
