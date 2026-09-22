@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import TabNav from './components/TabNav.vue'
 </script>
 

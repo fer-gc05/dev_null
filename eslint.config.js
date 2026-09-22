@@ -7,14 +7,17 @@ export default [
   ...pluginVue.configs['flat/recommended'],
   prettier,
   {
-    files: ['**/*.{js,vue}'],
+    files: ['**/*.{js,ts,vue}'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
       globals: {
         document: 'readonly',
         window: 'readonly',
-        console: 'readonly'
+        console: 'readonly',
+        navigator: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly'
       }
     },
     rules: {
@@ -24,6 +27,6 @@ export default [
     }
   },
   {
-    ignores: ['dist/**', 'node_modules/**', 'legacy/**']
+    ignores: ['dist/**', 'node_modules/**', 'legacy/**', '**/*.d.ts']
   }
 ]

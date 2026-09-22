@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue'
 import { fsData, pmData } from '../data/permissions'
 import InfoPanel from '../components/InfoPanel.vue'

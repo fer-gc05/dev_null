@@ -1,4 +1,6 @@
-export const fsData = [
+import type { PermissionItem } from './types'
+
+export const fsData: PermissionItem[] = [
   {
     title: '/ (Directorio Raíz)',
     desc: "Es el nivel más alto del sistema de archivos. Todo en Linux cuelga de aquí. No es lo mismo que el usuario 'root'.",
@@ -6,7 +8,7 @@ export const fsData = [
   },
   {
     title: '/bin & /sbin',
-    desc: "Contienen los Binarios (comandos ejecutables). Aquí viven los comandos que usas a diario como 'ls', 'cp', o 'mkdir'.",
+    desc: 'Contienen los Binarios (comandos ejecutables). Aquí viven los comandos que usas a diario como "ls", "cp", o "mkdir".',
     dev: 'Cuando instalas herramientas como PHP o Composer, sus ejecutables suelen enlazarse aquí para que puedas llamarlos desde cualquier lado.'
   },
   {
@@ -31,7 +33,7 @@ export const fsData = [
   }
 ]
 
-export const pmData = [
+export const pmData: PermissionItem[] = [
   {
     title: 'Usuarios: Root vs Regular',
     desc: 'Root (UID 0) es el superusuario que puede hacer todo. Los usuarios regulares tienen restricciones por seguridad.',

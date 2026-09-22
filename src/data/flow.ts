@@ -1,4 +1,6 @@
-export const flowData = [
+import type { FlowItem } from './types'
+
+export const flowData: FlowItem[] = [
   {
     title: 'Salida Estándar (stdout - Canal 1)',
     color: 'green',
@@ -9,7 +11,7 @@ export const flowData = [
   {
     title: 'Salida de Error (stderr - Canal 2)',
     color: 'red',
-    desc: 'Es un canal separado exclusivo para errores. Si tu código PHP o comando falla, el error viaja por aquí. Se separa del éxito para que los errores no corrompan tus archivos de datos.',
+    desc: 'Es un canal separado exclusivamente para errores. Si tu código PHP o comando falla, el error viaja por aquí. Se separa del éxito para que los errores no corrompan tus archivos de datos.',
     code: 'ls /carpeta_falsa 2> errores.log',
     output:
       "# Guarda el error 'No such file or directory' en el log, en vez de mostrarlo en pantalla."

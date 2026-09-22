@@ -1,19 +1,14 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue'
 import { flowData } from '../data/flow'
+import { getColor } from '../utils/colors'
 import InfoPanel from '../components/InfoPanel.vue'
 import InteractiveItem from '../components/InteractiveItem.vue'
 
 const selected = ref(0)
 
-const colorMap = {
-  green: 'var(--green)',
-  red: 'var(--red)',
-  yellow: 'var(--yellow)'
-}
-
 const current = computed(() => flowData[selected.value])
-const accentColor = computed(() => colorMap[current.value.color] || 'var(--green)')
+const accentColor = computed(() => getColor(current.value.color))
 </script>
 
 <template>

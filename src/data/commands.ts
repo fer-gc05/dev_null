@@ -1,4 +1,6 @@
-export const commandsData = [
+import type { CommandBlock } from './types'
+
+export const commandsData: CommandBlock[] = [
   {
     bloque: 'Navegación',
     color: 'green',

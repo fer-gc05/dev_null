@@ -1,4 +1,6 @@
-export const architectureData = [
+import type { ArchitectureLayer } from './types'
+
+export const architectureData: ArchitectureLayer[] = [
   {
     title: '1. Hardware',
     analogy: 'La Cocina. Los componentes físicos y brutos donde ocurre el trabajo pesado.',

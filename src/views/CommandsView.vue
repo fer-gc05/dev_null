@@ -1,20 +1,20 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue'
 import { commandsData } from '../data/commands'
+import { getColor } from '../utils/colors'
 
 const activeBlock = ref(0)
 
 const currentBlock = computed(() => commandsData[activeBlock.value])
+const accentColor = computed(() => getColor(currentBlock.value.color))
 
-const colorMap = {
-  green: 'var(--green)',
-  blue: 'var(--blue)',
-  yellow: 'var(--yellow)',
-  purple: 'var(--purple)',
-  red: 'var(--red)'
+const copyCommand = async (cmd: string) => {
+  try {
+    await navigator.clipboard.writeText(cmd)
+  } catch {
+    console.warn('Clipboard not available')
+  }
 }
-
-const accentColor = computed(() => colorMap[currentBlock.value.color] || 'var(--green)')
 </script>
 
 <template>
@@ -25,7 +25,11 @@ const accentColor = computed(() => colorMap[currentBlock.value.color] || 'var(--
         :key="block.bloque"
         class="tab"
         :class="{ active: activeBlock === index }"
-        :style="activeBlock === index ? { background: colorMap[block.color], borderColor: colorMap[block.color], color: 'var(--bg-color)' } : { color: colorMap[block.color], borderColor: colorMap[block.color] }"
+        :style="
+          activeBlock === index
+            ? { background: getColor(block.color), borderColor: getColor(block.color), color: 'var(--bg-color)' }
+            : { color: getColor(block.color), borderColor: getColor(block.color) }
+        "
         @click="activeBlock = index"
       >
         {{ block.bloque }}
@@ -40,7 +44,10 @@ const accentColor = computed(() => colorMap[currentBlock.value.color] || 'var(--
           class="command-card"
           :class="`accent-${currentBlock.color}`"
         >
-          <div class="command-number">{{ cmd.numero }}</div>
+          <div class="card-header">
+            <span class="command-number">{{ cmd.numero }}</span>
+            <button class="copy-btn" @click="copyCommand(cmd.comando)">Copiar</button>
+          </div>
           <div class="command-name">{{ cmd.comando }}</div>
           <div class="command-desc">
             <span class="label">Qué hace:</span> {{ cmd.queHace }}
@@ -104,18 +111,41 @@ const accentColor = computed(() => colorMap[currentBlock.value.color] || 'var(--
   border-left-color: var(--red);
 }
 
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .command-number {
   font-size: 0.85rem;
   color: var(--muted);
   font-weight: bold;
 }
 
+.copy-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--muted);
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
 .command-name {
   font-size: 1.4rem;
   font-weight: bold;
   color: var(--green);
-  font-family: 'Courier New', Courier, monospace;
-  word-break: break-all;
+  font-family: var(--font-code, 'Courier New', Courier, monospace);
+  word-break: break-word;
 }
 
 .command-desc,

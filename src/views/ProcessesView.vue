@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue'
 import { processesData } from '../data/processes'
 import InfoPanel from '../components/InfoPanel.vue'
@@ -26,7 +26,12 @@ const current = computed(() => processesData[selected.value])
       <div class="info-content">{{ current.desc }}</div>
 
       <div class="info-label">Ejemplo en Terminal:</div>
-      <div class="code-block" v-html="current.code" />
+      <div class="code-block">
+        <div v-for="(line, i) in current.codeLines" :key="i">
+          <span v-if="line.startsWith('#')" class="comment">{{ line }}</span>
+          <template v-else>{{ line }}</template>
+        </div>
+      </div>
     </InfoPanel>
   </section>
 </template>
