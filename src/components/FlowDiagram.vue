@@ -1,0 +1,179 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+
+const props = defineProps<{
+  selected: number
+}>()
+
+const emit = defineEmits<{ select: [index: number] }>()
+
+const width = 620
+const rowHeight = 48
+const rowGap = 22
+const padding = 16
+const height = computed(() => 4 * (rowHeight + rowGap) - rowGap + padding * 2)
+
+const rows = [
+  { command: 'comando', node: 'stdout', dest: 'archivo', color: 'var(--green)' },
+  { command: 'comando', node: 'stderr', dest: '/dev/null', color: 'var(--red)' },
+  { command: 'comando A', node: 'pipe |', dest: 'comando B', color: 'var(--yellow)' },
+  { command: 'comando', node: '> /dev/null', dest: 'descartado', color: 'var(--green)' }
+]
+
+const cmdX = 8
+const cmdW = 120
+const nodeX = 210
+const nodeW = 200
+const destX = 500
+const destW = 112
+
+const yOf = (i: number) => padding + i * (rowHeight + rowGap)
+const cyOf = (i: number) => yOf(i) + rowHeight / 2
+
+const edgePath1 = (i: number) => `M ${cmdX + cmdW} ${cyOf(i)} L ${nodeX} ${cyOf(i)}`
+const edgePath2 = (i: number) => `M ${nodeX + nodeW} ${cyOf(i)} L ${destX} ${cyOf(i)}`
+</script>
+
+<template>
+  <div class="flow-diagram-wrap">
+    <svg
+      class="flow-diagram"
+      :viewBox="`0 0 ${width} ${height}`"
+      role="img"
+      aria-label="Diagrama de flujo de datos"
+    >
+      <g v-for="(row, i) in rows" :key="i">
+        <rect
+          :x="cmdX"
+          :y="yOf(i)"
+          :width="cmdW"
+          :height="rowHeight"
+          class="cmd-rect"
+          rx="8"
+        />
+        <text
+          :x="cmdX + cmdW / 2"
+          :y="cyOf(i) + 5"
+          text-anchor="middle"
+          class="node-label dim"
+        >
+          {{ row.command }}
+        </text>
+
+        <path :d="edgePath1(i)" fill="none" :stroke="row.color" stroke-width="2" />
+        <circle r="4" :fill="row.color" class="data-pulse">
+          <animateMotion :path="edgePath1(i)" dur="2s" repeatCount="indefinite" />
+        </circle>
+
+        <g class="flow-node" @click="emit('select', i)">
+          <rect
+            :x="nodeX"
+            :y="yOf(i)"
+            :width="nodeW"
+            :height="rowHeight"
+            :fill="row.color"
+            :opacity="selected === i ? 1 : 0.6"
+            rx="8"
+            class="node-rect"
+            :class="{ active: selected === i }"
+          />
+          <text
+            :x="nodeX + nodeW / 2"
+            :y="cyOf(i) + 5"
+            text-anchor="middle"
+            class="node-label"
+          >
+            {{ row.node }}
+          </text>
+        </g>
+
+        <path :d="edgePath2(i)" fill="none" :stroke="row.color" stroke-width="2" />
+        <circle r="4" :fill="row.color" class="data-pulse">
+          <animateMotion :path="edgePath2(i)" dur="2s" repeatCount="indefinite" />
+        </circle>
+
+        <rect
+          :x="destX"
+          :y="yOf(i)"
+          :width="destW"
+          :height="rowHeight"
+          class="dest-rect"
+          rx="8"
+        />
+        <text
+          :x="destX + destW / 2"
+          :y="cyOf(i) + 5"
+          text-anchor="middle"
+          class="node-label dim"
+        >
+          {{ row.dest }}
+        </text>
+      </g>
+    </svg>
+    <p class="diagram-hint">Click en un nodo (stdout, stderr, pipe…) para ver su explicación →</p>
+  </div>
+</template>
+
+<style scoped>
+.flow-diagram-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.flow-diagram {
+  width: 100%;
+  height: auto;
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 8px;
+}
+
+.cmd-rect,
+.dest-rect {
+  fill: var(--bg-color);
+  stroke: var(--border-color);
+  stroke-width: 1;
+}
+
+.flow-node {
+  cursor: pointer;
+}
+
+.node-rect {
+  transition:
+    opacity 0.25s ease,
+    filter 0.25s ease;
+}
+
+.flow-node:hover .node-rect {
+  opacity: 1;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.node-label {
+  fill: #0d1117;
+  font-family: var(--font-code);
+  font-size: 13px;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.node-label.dim {
+  fill: var(--text-main);
+  font-weight: 500;
+}
+
+.data-pulse {
+  opacity: 0.9;
+}
+
+.diagram-hint {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0;
+  text-align: center;
+}
+</style>

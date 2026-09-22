@@ -2,23 +2,14 @@
 import { ref } from 'vue'
 import { architectureData } from '../data/architecture'
 import InfoPanel from '../components/InfoPanel.vue'
-import InteractiveItem from '../components/InteractiveItem.vue'
+import LayerDiagram from '../components/LayerDiagram.vue'
 
 const selected = ref(0)
 </script>
 
 <template>
   <section class="container">
-    <div class="diagram">
-      <InteractiveItem
-        v-for="(layer, index) in architectureData"
-        :key="index"
-        :title="layer.title"
-        :is-active="selected === index"
-        accent="green"
-        @select="selected = index"
-      />
-    </div>
+    <LayerDiagram :layers="architectureData" :selected="selected" @select="selected = $event" />
 
     <InfoPanel :title="architectureData[selected].title" accent-color="var(--green)">
       <div class="info-label">Analogía del Restaurante:</div>

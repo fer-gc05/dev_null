@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, nextTick } from 'vue'
 import { commandsData } from '../data/commands'
 import { getColor } from '../utils/colors'
+import TerminalSimulator from '../components/TerminalSimulator.vue'
+import type { Command } from '../data/types'
 
 const activeBlock = ref(0)
+const termRef = ref<InstanceType<typeof TerminalSimulator> | null>(null)
 
 const currentBlock = computed(() => commandsData[activeBlock.value])
 
@@ -14,10 +17,21 @@ const copyCommand = async (cmd: string) => {
     console.warn('Clipboard not available')
   }
 }
+
+const tryCommand = async (cmd: Command) => {
+  await termRef.value?.typeCommand(cmd.comando, [
+    `# ${cmd.queHace}`,
+    '# (salida simulada — demo interactiva de dev_null)'
+  ])
+  await nextTick()
+  termRef.value?.$el?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+}
 </script>
 
 <template>
   <section class="commands-view">
+    <TerminalSimulator ref="termRef" />
+
     <div class="tabs">
       <button
         v-for="(block, index) in commandsData"
@@ -54,6 +68,7 @@ const copyCommand = async (cmd: string) => {
           <div class="command-use">
             <span class="label">Cuándo usarlo:</span> {{ cmd.cuandoUsarlo }}
           </div>
+          <button class="try-btn" @click="tryCommand(cmd)">Probar en terminal →</button>
         </article>
       </div>
     </transition>
@@ -158,5 +173,23 @@ const copyCommand = async (cmd: string) => {
   color: var(--muted);
   font-weight: bold;
   font-size: 0.85rem;
+}
+
+.try-btn {
+  background: transparent;
+  border: 1px solid var(--green);
+  color: var(--green);
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: inherit;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  margin-top: auto;
+}
+
+.try-btn:hover {
+  background: rgba(46, 160, 67, 0.12);
 }
 </style>

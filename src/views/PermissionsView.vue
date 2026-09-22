@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import { fsData, pmData } from '../data/permissions'
 import InfoPanel from '../components/InfoPanel.vue'
 import InteractiveItem from '../components/InteractiveItem.vue'
+import FileTree from '../components/FileTree.vue'
 
 const activeTab = ref('archivos')
 const selectedFs = ref(0)
@@ -10,7 +11,8 @@ const selectedPm = ref(0)
 
 const tabs = [
   { id: 'archivos', label: '📂 Sistema de Archivos' },
-  { id: 'permisos', label: '🔐 Usuarios y Permisos' }
+  { id: 'permisos', label: '🔐 Usuarios y Permisos' },
+  { id: 'arbol', label: '🌳 File Tree' }
 ]
 
 const currentFs = computed(() => fsData[selectedFs.value])
@@ -53,6 +55,10 @@ const currentPm = computed(() => pmData[selectedPm.value])
         </InfoPanel>
       </div>
 
+      <div v-else-if="activeTab === 'arbol'" key="arbol" class="tree-tab">
+        <FileTree />
+      </div>
+
       <div v-else key="permisos" class="container">
         <div class="interactive-list">
           <InteractiveItem
@@ -83,5 +89,9 @@ const currentPm = computed(() => pmData[selectedPm.value])
 .permissions-view {
   width: 100%;
   max-width: 1000px;
+}
+
+.tree-tab {
+  width: 100%;
 }
 </style>

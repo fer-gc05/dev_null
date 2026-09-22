@@ -1,36 +1,63 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { flowData } from '../data/flow'
 import { getColor } from '../utils/colors'
 import InfoPanel from '../components/InfoPanel.vue'
-import InteractiveItem from '../components/InteractiveItem.vue'
+import FlowDiagram from '../components/FlowDiagram.vue'
 
 const selected = ref(0)
 
 const current = computed(() => flowData[selected.value])
 const accentColor = computed(() => getColor(current.value.color))
+
+const typedCode = ref('')
+let generation = 0
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
+watch(
+  selected,
+  async () => {
+    const my = ++generation
+    typedCode.value = ''
+    for (const char of current.value.code) {
+      if (my !== generation) return
+      typedCode.value += char
+      await sleep(22)
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
   <section class="container">
-    <div class="interactive-list">
-      <InteractiveItem
-        v-for="(item, index) in flowData"
-        :key="index"
-        :title="`${index + 1}. ${item.title}`"
-        :is-active="selected === index"
-        :accent="item.color"
-        @select="selected = index"
-      />
-    </div>
+    <FlowDiagram :selected="selected" @select="selected = $event" />
 
     <InfoPanel :title="current.title" :accent-color="accentColor">
       <div class="info-label">Concepto Backend:</div>
       <div class="info-content">{{ current.desc }}</div>
 
       <div class="info-label">Ejemplo de Código:</div>
-      <div class="code-block"><span class="prompt">$</span> {{ current.code }}</div>
+      <div class="code-block"><span class="prompt">$</span> {{ typedCode }}<span class="type-cursor">▋</span></div>
       <div class="terminal-output">{{ current.output }}</div>
     </InfoPanel>
   </section>
 </template>
+
+<style scoped>
+.type-cursor {
+  color: var(--green);
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  from,
+  to {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+</style>

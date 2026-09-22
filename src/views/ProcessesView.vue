@@ -3,35 +3,49 @@ import { ref, computed } from 'vue'
 import { processesData } from '../data/processes'
 import InfoPanel from '../components/InfoPanel.vue'
 import InteractiveItem from '../components/InteractiveItem.vue'
+import ProcessTree from '../components/ProcessTree.vue'
 
 const selected = ref(0)
 const current = computed(() => processesData[selected.value])
 </script>
 
 <template>
-  <section class="container">
-    <div class="interactive-list">
-      <InteractiveItem
-        v-for="(item, index) in processesData"
-        :key="index"
-        :title="item.title"
-        :is-active="selected === index"
-        accent="purple"
-        @select="selected = index"
-      />
-    </div>
+  <section class="processes-view">
+    <ProcessTree />
 
-    <InfoPanel :title="current.title" accent-color="var(--purple)">
-      <div class="info-label">¿Qué es?</div>
-      <div class="info-content">{{ current.desc }}</div>
-
-      <div class="info-label">Ejemplo en Terminal:</div>
-      <div class="code-block">
-        <div v-for="(line, i) in current.codeLines" :key="i">
-          <span v-if="line.startsWith('#')" class="comment">{{ line }}</span>
-          <template v-else>{{ line }}</template>
-        </div>
+    <div class="container">
+      <div class="interactive-list">
+        <InteractiveItem
+          v-for="(item, index) in processesData"
+          :key="index"
+          :title="item.title"
+          :is-active="selected === index"
+          accent="purple"
+          @select="selected = index"
+        />
       </div>
-    </InfoPanel>
+
+      <InfoPanel :title="current.title" accent-color="var(--purple)">
+        <div class="info-label">¿Qué es?</div>
+        <div class="info-content">{{ current.desc }}</div>
+
+        <div class="info-label">Ejemplo en Terminal:</div>
+        <div class="code-block">
+          <div v-for="(line, i) in current.codeLines" :key="i">
+            <span v-if="line.startsWith('#')" class="comment">{{ line }}</span>
+            <template v-else>{{ line }}</template>
+          </div>
+        </div>
+      </InfoPanel>
+    </div>
   </section>
 </template>
+
+<style scoped>
+.processes-view {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+}
+</style>
