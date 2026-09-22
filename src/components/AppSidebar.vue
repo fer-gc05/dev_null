@@ -17,7 +17,7 @@ const { markVisited, isVisited } = useProgress()
 const translatedSections = computed(() =>
   navigationSections.map((s) => ({
     ...s,
-    translatedName: t(s.name as string)
+    translatedName: t.value(s.name as string)
   }))
 )
 

@@ -8,7 +8,7 @@ const route = useRoute()
 
 const mobileItems = computed(() => sections)
 
-const getName = (item: typeof sections[0]) => t(item.name as string)
+const getName = (item: typeof sections[0]) => t.value(item.name as string)
 </script>
 
 <template>

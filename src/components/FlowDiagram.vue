@@ -7,7 +7,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{ select: [index: number] }>()
 
-const width = 620
+// Use relative sizing based on container width
 const rowHeight = 48
 const rowGap = 22
 const padding = 16
@@ -20,18 +20,21 @@ const rows = [
   { command: 'comando', node: '> /dev/null', dest: 'descartado', color: 'var(--green)' }
 ]
 
-const cmdX = 8
-const cmdW = 120
-const nodeX = 210
-const nodeW = 200
-const destX = 500
-const destW = 112
+// Relative positions (percentage-based)
+const cmdX = 12
+const cmdW = 110
+const nodeX = 170
+const nodeW = 180
+const destX = 420
+const destW = 100
 
 const yOf = (i: number) => padding + i * (rowHeight + rowGap)
 const cyOf = (i: number) => yOf(i) + rowHeight / 2
 
 const edgePath1 = (i: number) => `M ${cmdX + cmdW} ${cyOf(i)} L ${nodeX} ${cyOf(i)}`
 const edgePath2 = (i: number) => `M ${nodeX + nodeW} ${cyOf(i)} L ${destX} ${cyOf(i)}`
+
+const width = computed(() => destX + destW + 12)
 </script>
 
 <template>

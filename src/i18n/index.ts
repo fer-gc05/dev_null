@@ -27,15 +27,16 @@ export function toggleLocale() {
   setLocale(locale.value === 'es' ? 'en' : 'es')
 }
 
-export function t(key: string): string {
+// t reactiva: computed que devuelve función para que Vue trackee locale
+export const t = computed<(key: string) => string>(() => (key: string): string => {
   return dict[key]?.[locale.value] ?? key
-}
+})
 
 export type Bi = { es: string; en: string }
 
-export function L(b: Bi): string {
+export const L = computed<(b: Bi) => string>(() => (b: Bi): string => {
   return b[locale.value] ?? b.es
-}
+})
 
 export function useLocale() {
   const current = computed(() => locale.value)
