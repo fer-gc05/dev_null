@@ -116,6 +116,7 @@ watch(
   position: sticky;
   top: 0;
   height: 100dvh;
+  width: 260px;
   background: var(--panel-bg);
   border-right: 1px solid var(--border-color);
   display: flex;
@@ -123,9 +124,11 @@ watch(
   padding: 20px 12px;
   overflow-y: auto;
   flex-shrink: 0;
+  transition: width 0.2s ease, padding 0.2s ease;
 }
 
 .sidebar.collapsed {
+  width: 64px;
   padding: 20px 8px;
 }
 

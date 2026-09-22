@@ -73,7 +73,7 @@ onBeforeUnmount(() => {
 <style scoped>
 .app-shell {
   display: grid;
-  grid-template-columns: 260px minmax(0, 1fr);
+  grid-template-columns: auto minmax(0, 1fr);
   height: 100dvh;
   width: 100%;
   overflow: hidden;
