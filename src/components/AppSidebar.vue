@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { navigationSections } from '../config/sections'
 import { useProgress } from '../composables/useProgress'
 import SectionProgress from './SectionProgress.vue'
+import LocaleToggle from './LocaleToggle.vue'
+import { initI18n } from '../i18n'
 
 defineProps<{ searchOpen: boolean }>()
 const emit = defineEmits<{ search: [] }>()
@@ -11,6 +13,10 @@ const emit = defineEmits<{ search: [] }>()
 const route = useRoute()
 const isCollapsed = ref(false)
 const { markVisited, isVisited } = useProgress()
+
+onMounted(() => {
+  initI18n()
+})
 
 watch(
   () => route.name,
@@ -28,13 +34,16 @@ watch(
         <span class="logo-prompt">>_</span>
         <span v-if="!isCollapsed" class="logo-name">dev_null</span>
       </router-link>
-      <button
-        class="collapse-btn"
-        :aria-label="isCollapsed ? 'Expandir menú' : 'Colapsar menú'"
-        @click="isCollapsed = !isCollapsed"
-      >
-        {{ isCollapsed ? '»' : '«' }}
-      </button>
+      <div class="header-actions">
+        <LocaleToggle v-if="!isCollapsed" />
+        <button
+          class="collapse-btn"
+          :aria-label="isCollapsed ? 'Expandir menú' : 'Colapsar menú'"
+          @click="isCollapsed = !isCollapsed"
+        >
+          {{ isCollapsed ? '»' : '«' }}
+        </button>
+      </div>
     </div>
 
     <button class="sidebar-search" :aria-expanded="searchOpen" @click="emit('search')">
@@ -146,6 +155,12 @@ watch(
   gap: 8px;
   margin-bottom: 20px;
   padding: 0 4px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .sidebar-logo {

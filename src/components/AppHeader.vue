@@ -1,8 +1,15 @@
+<script setup lang="ts">
+import LocaleToggle from './LocaleToggle.vue'
+</script>
+
 <template>
   <header class="app-header">
-    <div class="logo">
-      <span class="logo-icon">>_<span class="cursor"></span></span>
-      <span class="logo-text">dev_null</span>
+    <div class="header-row">
+      <div class="logo">
+        <span class="logo-icon">>_<span class="cursor"></span></span>
+        <span class="logo-text">dev_null</span>
+      </div>
+      <LocaleToggle />
     </div>
     <div class="tagline">Aprende Linux capa por capa, flujo por flujo.</div>
   </header>
