@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import type { PermissionItem } from '../data/types'
+import { L } from '../i18n'
 
 interface Props {
   items: PermissionItem[]
@@ -64,28 +65,28 @@ const onSelect = (index: number) => {
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
             </span>
-            <span class="perm-title">{{ item.title }}</span>
+            <span class="perm-title">{{ L(item.title) }}</span>
           </div>
         </div>
       </div>
     </div>
 
     <div class="tree-info">
-      <h3>{{ selected.title }}</h3>
+      <h3>{{ L(selected.title) }}</h3>
       <dl>
-        <dt v-if="accent === 'blue'">Directorio</dt>
-        <dt v-else>Concepto</dt>
-        <dd class="mono">{{ selected.title }}</dd>
+        <dt v-if="accent === 'blue'">{{ L({ es: 'Directorio', en: 'Directory' }) }}</dt>
+        <dt v-else>{{ L({ es: 'Concepto', en: 'Concept' }) }}</dt>
+        <dd class="mono">{{ L(selected.title) }}</dd>
       </dl>
 
-      <div class="info-label">Explicación:</div>
-      <div class="info-content">{{ selected.desc }}</div>
+      <div class="info-label">{{ L({ es: 'Explicación:', en: 'Explanation:' }) }}</div>
+      <div class="info-content">{{ L(selected.desc) }}</div>
 
-      <div class="info-label" v-if="accent === 'blue'">Relevancia para un Dev:</div>
-      <div class="info-label" v-else>Ejemplo en Terminal:</div>
-      <div class="info-content">{{ selected.dev || selected.code }}</div>
+      <div class="info-label" v-if="accent === 'blue'">{{ L({ es: 'Relevancia para un Dev:', en: 'Dev Relevance:' }) }}</div>
+      <div class="info-label" v-else>{{ L({ es: 'Ejemplo en Terminal:', en: 'Terminal Example:' }) }}</div>
+      <div class="info-content">{{ L(selected.dev || { es: '', en: '' }) }}</div>
 
-      <div v-if="selected.code" class="info-label">Comando chmod:</div>
+      <div v-if="selected.code" class="info-label">{{ L({ es: 'Comando chmod:', en: 'chmod command:' }) }}</div>
       <div v-if="selected.code" class="code-block">{{ selected.code }}</div>
     </div>
   </div>

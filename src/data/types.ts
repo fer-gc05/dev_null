@@ -13,16 +13,21 @@ export interface FlowItem {
   output: string
 }
 
+export interface Bi {
+  es: string
+  en: string
+}
+
 export interface PermissionItem {
-  title: string
-  desc: string
-  dev?: string
+  title: Bi
+  desc: Bi
+  dev?: Bi
   code?: string
 }
 
 export interface ProcessItem {
-  title: string
-  desc: string
+  title: Bi
+  desc: Bi
   codeLines: string[]
 }
 

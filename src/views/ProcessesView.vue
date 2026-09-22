@@ -3,6 +3,7 @@ import { ref, computed, nextTick } from 'vue'
 import { processesData } from '../data/processes'
 import ProcessTree from '../components/ProcessTree.vue'
 import TerminalSimulator from '../components/TerminalSimulator.vue'
+import { t, L } from '../i18n'
 
 const selected = ref(0)
 const current = computed(() => processesData[selected.value])
@@ -71,7 +72,7 @@ const processCommands: Record<number, { cmd: string; output: string[] }> = {
         :class="{ active: selected === index }"
         @click="selected = index"
       >
-        {{ item.title }}
+        {{ L(item.title) }}
       </button>
     </div>
 
@@ -88,14 +89,14 @@ const processCommands: Record<number, { cmd: string; output: string[] }> = {
             class="action-btn"
             @click="tryCommand(processCommands[selected]?.cmd || '', processCommands[selected]?.output || [])"
           >
-            Probar: {{ processCommands[selected]?.cmd }}
+            {{ t('proc.action.try') }} {{ processCommands[selected]?.cmd }}
           </button>
         </div>
 
         <div class="process-info">
-          <h3>{{ current.title }}</h3>
-          <div class="info-label">¿Qué es?</div>
-          <div class="info-content">{{ current.desc }}</div>
+          <h3>{{ L(current.title) }}</h3>
+          <div class="info-label">{{ t('proc.label.what') }}</div>
+          <div class="info-content">{{ L(current.desc) }}</div>
         </div>
       </div>
     </div>
@@ -141,100 +142,4 @@ const processCommands: Record<number, { cmd: string; output: string[] }> = {
   cursor: pointer;
   font-family: inherit;
   font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--muted);
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
-.tab:hover {
-  border-color: var(--purple);
-  color: var(--purple);
-}
-
-.tab.active {
-  background: var(--purple);
-  border-color: var(--purple);
-  color: var(--bg-color);
-}
-
-.process-content {
-  display: flex;
-  gap: 24px;
-  width: 100%;
-}
-
-.tree-section {
-  flex: 1.5;
-  min-width: 0;
-}
-
-.terminal-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  min-width: 0;
-}
-
-.process-actions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.action-btn {
-  background: transparent;
-  border: 1px solid var(--purple);
-  color: var(--purple);
-  padding: 8px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-family: var(--font-code);
-  font-size: 0.8rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
-.action-btn:hover {
-  background: rgba(188, 140, 255, 0.1);
-}
-
-.process-info {
-  background: var(--panel-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  padding: 20px;
-  flex-shrink: 0;
-}
-
-.process-info h3 {
-  margin: 0 0 16px;
-  color: var(--purple);
-  font-family: var(--font-code);
-  font-size: 1rem;
-}
-
-.info-label {
-  color: var(--muted);
-  font-weight: bold;
-  margin-top: 16px;
-  font-size: 0.85rem;
-}
-
-.info-label:first-of-type {
-  margin-top: 0;
-}
-
-.info-content {
-  margin-top: 8px;
-  line-height: 1.6;
-}
-
-@media (max-width: 768px) {
-  .process-content {
-    flex-direction: column;
-  }
-}
-</style>
+  font-weight: 500.

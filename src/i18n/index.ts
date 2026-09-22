@@ -138,4 +138,6 @@ const dict: Record<string, { es: string; en: string }> = {
   'proc.status.sleeping': { es: 'sleeping', en: 'sleeping' },
   'proc.status.zombie': { es: 'zombie', en: 'zombie' },
   'proc.empty': { es: 'No hay procesos. Kill exitoso ✓', en: 'No processes. Successful kill ✓' },
+  'proc.action.try': { es: 'Probar:', en: 'Try:' },
+  'proc.label.what': { es: '¿Qué es?', en: 'What is it?' },
 }

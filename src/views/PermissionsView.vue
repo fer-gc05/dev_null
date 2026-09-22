@@ -3,13 +3,14 @@ import { ref } from 'vue'
 import { fsData, pmData } from '../data/permissions'
 import PermTree from '../components/PermTree.vue'
 import FileTree from '../components/FileTree.vue'
+import { t } from '../i18n'
 
 const activeTab = ref('archivos')
 
 const tabs = [
-  { id: 'archivos', label: '📂 Sistema de Archivos' },
-  { id: 'permisos', label: '🔐 Usuarios y Permisos' },
-  { id: 'arbol', label: '🌳 File Tree' }
+  { id: 'archivos', label: 'perm.tab.files' },
+  { id: 'permisos', label: 'perm.tab.perms' },
+  { id: 'arbol', label: 'perm.tab.tree' }
 ]
 </script>
 
@@ -23,7 +24,7 @@ const tabs = [
         :class="{ active: activeTab === tab.id }"
         @click="activeTab = tab.id"
       >
-        {{ tab.label }}
+        {{ t(tab.label) }}
       </button>
     </div>
 
