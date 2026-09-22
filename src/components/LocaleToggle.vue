@@ -11,8 +11,8 @@ const { current, toggleLocale } = useLocale()
     :aria-label="current === 'es' ? 'Cambiar a inglés' : 'Switch to Spanish'"
     :title="current === 'es' ? 'Cambiar a inglés' : 'Switch to Spanish'"
   >
-    <span class="flag" aria-hidden="true">{{ current === 'es' ? '🇺🇸' : '🇪🇸' }}</span>
     <span class="label">{{ current === 'es' ? 'EN' : 'ES' }}</span>
+    <span class="chevron" aria-hidden="true">{{ current === 'es' ? '▸' : '◂' }}</span>
   </button>
 </template>
 
@@ -46,23 +46,24 @@ const { current, toggleLocale } = useLocale()
   transform: translateY(0);
 }
 
-.flag {
-  font-size: 0.9rem;
-}
-
 .label {
   font-family: var(--font-code);
   font-size: 0.75rem;
   letter-spacing: 0.05em;
+  min-width: 28px;
+  text-align: center;
+}
+
+.chevron {
+  font-size: 0.7rem;
+  color: var(--muted);
+  transition: transform 0.2s ease;
 }
 
 @media (max-width: 768px) {
   .locale-toggle {
     padding: 5px 10px;
     font-size: 0.75rem;
-  }
-  .label {
-    display: none;
   }
 }
 </style>

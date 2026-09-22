@@ -11,8 +11,7 @@ export function initI18n() {
   if (saved && (saved === 'es' || saved === 'en')) {
     locale.value = saved
   } else {
-    const navLang = navigator.language.startsWith('es') ? 'es' : 'en'
-    locale.value = navLang
+    locale.value = 'es'
   }
   document.documentElement.lang = locale.value
   ready.value = true
