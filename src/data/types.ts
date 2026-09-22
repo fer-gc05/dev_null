@@ -73,3 +73,8 @@ export interface SearchIndexItem {
   path: string
   keywords: string[]
 }
+
+export interface BreadcrumbItem {
+  label: string
+  path?: string
+}
