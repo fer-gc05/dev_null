@@ -182,6 +182,7 @@ const processCommands: Record<number, { cmd: string; output: string[] }> = {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  min-width: 0;
 }
 
 .action-btn {
@@ -195,7 +196,9 @@ const processCommands: Record<number, { cmd: string; output: string[] }> = {
   font-size: 0.8rem;
   font-weight: 500;
   transition: all 0.2s ease;
-  white-space: nowrap;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-align: left;
 }
 
 .action-btn:hover {
@@ -207,7 +210,8 @@ const processCommands: Record<number, { cmd: string; output: string[] }> = {
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
   padding: 20px;
-  flex-shrink: 0;
+  flex: 1;
+  min-width: 0;
 }
 
 .process-info h3 {

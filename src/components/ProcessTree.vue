@@ -119,7 +119,7 @@ const statusClass = (status: ProcessNode['status']) => `status-${status}`
         </div>
       </TransitionGroup>
       <p v-if="!rows.length" class="tree-empty">No hay procesos. Kill exitoso ✓</p>
-      <p class="tree-hint">CPU/RAM se actualizan cada 2s (simulación)</p>
+      <p class="tree-hint">CPU/RAM se actualizan cada 3s (simulación)</p>
     </div>
 
     <div v-if="selected" class="proc-info">
@@ -155,13 +155,14 @@ const statusClass = (status: ProcessNode['status']) => `status-${status}`
 <style scoped>
 .process-tree-view {
   display: flex;
-  gap: 24px;
+  flex-direction: column;
+  gap: 16px;
   width: 100%;
   margin-bottom: 32px;
 }
 
 .tree-panel {
-  flex: 1.5;
+  width: 100%;
   background: var(--panel-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
@@ -172,6 +173,7 @@ const statusClass = (status: ProcessNode['status']) => `status-${status}`
 .tree-rows {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .proc-row {
@@ -266,12 +268,12 @@ const statusClass = (status: ProcessNode['status']) => `status-${status}`
 }
 
 .proc-info {
-  flex: 1;
+  width: 100%;
   background: var(--panel-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
   padding: 24px;
-  align-self: flex-start;
+  min-width: 0;
 }
 
 .proc-info h3 {
@@ -348,12 +350,12 @@ const statusClass = (status: ProcessNode['status']) => `status-${status}`
 }
 
 @media (max-width: 768px) {
-  .process-tree-view {
-    flex-direction: column;
-  }
-
   .proc-stat {
     display: none;
+  }
+
+  .proc-info {
+    padding: 16px;
   }
 }
 </style>
