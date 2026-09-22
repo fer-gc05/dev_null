@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Command } from '../data/types'
+import { t } from '../i18n'
 
 defineProps<{
   command: Command
@@ -16,21 +17,21 @@ const emit = defineEmits<{ copy: [cmd: string]; try: [cmd: Command] }>()
       <button
         class="copy-btn"
         type="button"
-        aria-label="Copiar comando"
+        :aria-label="t('footer.copy')"
         @click="emit('copy', command.comando)"
       >
-        Copiar
+        {{ t('footer.copy') }}
       </button>
     </div>
     <div class="command-name">{{ command.comando }}</div>
     <div class="command-desc">
-      <span class="label">Qué hace:</span> {{ command.queHace }}
+      <span class="label">{{ t('cmd.label.what') }}</span> {{ command.queHace }}
     </div>
     <div class="command-use">
-      <span class="label">Cuándo usarlo:</span> {{ command.cuandoUsarlo }}
+      <span class="label">{{ t('cmd.label.when') }}</span> {{ command.cuandoUsarlo }}
     </div>
     <button class="try-btn" type="button" @click="emit('try', command)">
-      Probar en terminal →
+      {{ t('footer.try') }} <span class="arrow">→</span>
     </button>
     <slot name="actions" />
   </article>
@@ -136,9 +137,16 @@ const emit = defineEmits<{ copy: [cmd: string]; try: [cmd: Command] }>()
   font-weight: bold;
   transition: all 0.2s ease;
   margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .try-btn:hover {
   background: rgba(46, 160, 67, 0.12);
+}
+
+.arrow {
+  font-size: 0.9em;
 }
 </style>

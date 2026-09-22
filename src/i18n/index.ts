@@ -94,6 +94,8 @@ const dict: Record<string, { es: string; en: string }> = {
   'cmd.block.network': { es: 'Red y HTTP', en: 'Network & HTTP' },
   'cmd.block.processes': { es: 'Procesos y Recursos', en: 'Processes & Resources' },
   'cmd.block.logs': { es: 'Logs y cierre', en: 'Logs & Cleanup' },
+  'cmd.label.what': { es: 'Qué hace:', en: 'What it does:' },
+  'cmd.label.when': { es: 'Cuándo usarlo:', en: 'When to use:' },
   'perm.tab.files': { es: 'Sistema de Archivos', en: 'File System' },
   'perm.tab.perms': { es: 'Usuarios y Permisos', en: 'Users & Permissions' },
   'perm.tab.tree': { es: 'File Tree', en: 'File Tree' },

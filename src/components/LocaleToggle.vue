@@ -12,7 +12,6 @@ const { current, toggleLocale } = useLocale()
     :title="current === 'es' ? 'Cambiar a inglés' : 'Switch to Spanish'"
   >
     <span class="label">{{ current === 'es' ? 'EN' : 'ES' }}</span>
-    <span class="chevron" aria-hidden="true">{{ current === 'es' ? '▸' : '◂' }}</span>
   </button>
 </template>
 
@@ -52,12 +51,6 @@ const { current, toggleLocale } = useLocale()
   letter-spacing: 0.05em;
   min-width: 28px;
   text-align: center;
-}
-
-.chevron {
-  font-size: 0.7rem;
-  color: var(--muted);
-  transition: transform 0.2s ease;
 }
 
 @media (max-width: 768px) {
