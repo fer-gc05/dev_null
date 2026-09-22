@@ -142,7 +142,7 @@ const processCommands: Record<number, { cmd: string; output: string[] }> = {
   cursor: pointer;
   font-family: inherit;
   font-size: 0.85rem;
-  font-weight: 500.
+  font-weight: 500;
   color: var(--muted);
   transition: all 0.2s ease;
   white-space: nowrap;
@@ -181,7 +181,7 @@ const processCommands: Record<number, { cmd: string; output: string[] }> = {
 .process-actions {
   display: flex;
   gap: 8px;
-  flex-wrap: wrap.
+  flex-wrap: wrap;
 }
 
 .action-btn {
@@ -195,7 +195,7 @@ const processCommands: Record<number, { cmd: string; output: string[] }> = {
   font-size: 0.8rem;
   font-weight: 500;
   transition: all 0.2s ease;
-  white-space: nowrap.
+  white-space: nowrap;
 }
 
 .action-btn:hover {
@@ -221,11 +221,11 @@ const processCommands: Record<number, { cmd: string; output: string[] }> = {
   color: var(--muted);
   font-weight: bold;
   margin-top: 16px;
-  font-size: 0.85rem.
+  font-size: 0.85rem;
 }
 
 .info-label:first-of-type {
-  margin-top: 0.
+  margin-top: 0;
 }
 
 .info-content {
