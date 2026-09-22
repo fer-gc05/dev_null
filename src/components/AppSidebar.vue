@@ -34,16 +34,13 @@ watch(
         <span class="logo-prompt">>_</span>
         <span v-if="!isCollapsed" class="logo-name">dev_null</span>
       </router-link>
-      <div class="header-actions">
-        <LocaleToggle v-if="!isCollapsed" />
-        <button
-          class="collapse-btn"
-          :aria-label="isCollapsed ? 'Expandir menú' : 'Colapsar menú'"
-          @click="isCollapsed = !isCollapsed"
-        >
-          {{ isCollapsed ? '»' : '«' }}
-        </button>
-      </div>
+      <button
+        class="collapse-btn"
+        :aria-label="isCollapsed ? 'Expandir menú' : 'Colapsar menú'"
+        @click="isCollapsed = !isCollapsed"
+      >
+        {{ isCollapsed ? '»' : '«' }}
+      </button>
     </div>
 
     <button class="sidebar-search" :aria-expanded="searchOpen" @click="emit('search')">
@@ -107,6 +104,7 @@ watch(
     </nav>
 
     <div class="sidebar-footer">
+      <LocaleToggle />
       <a
         v-if="!isCollapsed"
         href="https://youtube.com/@dev_null-b7h"
@@ -155,12 +153,6 @@ watch(
   gap: 8px;
   margin-bottom: 20px;
   padding: 0 4px;
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 
 .sidebar-logo {

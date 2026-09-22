@@ -24,6 +24,15 @@ import LocaleToggle from './LocaleToggle.vue'
   margin-bottom: 16px;
 }
 
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1000px;
+  gap: 16px;
+}
+
 .logo {
   display: flex;
   align-items: baseline;
