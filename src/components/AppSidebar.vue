@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, computed } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { navigationSections } from '../config/sections'
 import { useProgress } from '../composables/useProgress'
 import SectionProgress from './SectionProgress.vue'
 import LocaleToggle from './LocaleToggle.vue'
-import { initI18n, t } from '../i18n'
+import { t } from '../i18n'
 
 defineProps<{ searchOpen: boolean }>()
 const emit = defineEmits<{ search: [] }>()
@@ -20,10 +20,6 @@ const translatedSections = computed(() =>
     translatedName: t.value(s.name as string)
   }))
 )
-
-onMounted(() => {
-  initI18n()
-})
 
 watch(
   () => route.name,

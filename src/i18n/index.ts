@@ -5,8 +5,8 @@ export type Locale = 'es' | 'en'
 const locale = ref<Locale>('es')
 const ready = ref(false)
 
-export function initI18n() {
-  if (ready.value) return
+// Inicializar locale síncronamente al importar
+if (!ready.value) {
   const saved = localStorage.getItem('devnull-locale') as Locale | null
   if (saved && (saved === 'es' || saved === 'en')) {
     locale.value = saved
@@ -15,6 +15,20 @@ export function initI18n() {
   }
   document.documentElement.lang = locale.value
   ready.value = true
+}
+
+export function initI18n() {
+  // Ya inicializado al importar, solo marcar ready si no lo está
+  if (!ready.value) {
+    const saved = localStorage.getItem('devnull-locale') as Locale | null
+    if (saved && (saved === 'es' || saved === 'en')) {
+      locale.value = saved
+    } else {
+      locale.value = 'es'
+    }
+    document.documentElement.lang = locale.value
+    ready.value = true
+  }
 }
 
 export function setLocale(l: Locale) {
